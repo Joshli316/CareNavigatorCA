@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { Container } from '@/components/layout/Container';
-import { ArrowRight, Clock, Shield, Sparkles } from 'lucide-react';
+import { ArrowRight, Clock, Shield, Sparkles, ClipboardCheck, TrendingUp, FileCheck } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -25,6 +25,55 @@ export default function Home() {
             <ArrowRight className="w-5 h-5" />
           </Button>
         </Link>
+
+        {/* How It Works */}
+        <div className="mt-24 mb-20">
+          <h2 className="text-heading-lg text-neutral-900 mb-4 text-center">How It Works</h2>
+          <p className="text-body text-neutral-600 mb-12 text-center max-w-2xl mx-auto">
+            Three simple steps to discover your personalized benefits roadmap
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-100 rounded-full mb-6 relative">
+                <ClipboardCheck className="w-10 h-10 text-primary-600" />
+                <span className="absolute -top-2 -right-2 w-8 h-8 bg-primary-500 text-white rounded-full flex items-center justify-center text-heading-sm font-bold">
+                  1
+                </span>
+              </div>
+              <h3 className="text-heading-sm mb-3">Answer 5 Quick Questions</h3>
+              <p className="text-body text-neutral-600">
+                Tell us about your location, disability, financial situation, and household. Takes just 5 minutes.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-secondary-100 rounded-full mb-6 relative">
+                <TrendingUp className="w-10 h-10 text-secondary-600" />
+                <span className="absolute -top-2 -right-2 w-8 h-8 bg-secondary-500 text-white rounded-full flex items-center justify-center text-heading-sm font-bold">
+                  2
+                </span>
+              </div>
+              <h3 className="text-heading-sm mb-3">Get Matched Instantly</h3>
+              <p className="text-body text-neutral-600">
+                Our smart engine evaluates 34+ federal, state, local, and nonprofit programs to find your best matches.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-success/20 rounded-full mb-6 relative">
+                <FileCheck className="w-10 h-10 text-success" />
+                <span className="absolute -top-2 -right-2 w-8 h-8 bg-success text-white rounded-full flex items-center justify-center text-heading-sm font-bold">
+                  3
+                </span>
+              </div>
+              <h3 className="text-heading-sm mb-3">Apply with Confidence</h3>
+              <p className="text-body text-neutral-600">
+                See your eligibility probability, estimated benefits, timelines, and clear next steps for each program.
+              </p>
+            </div>
+          </div>
+        </div>
 
         {/* Features */}
         <div className="grid md:grid-cols-3 gap-8 mt-20">

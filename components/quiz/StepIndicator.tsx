@@ -7,8 +7,28 @@ interface StepIndicatorProps {
 }
 
 export function StepIndicator({ currentStep, totalSteps, completedSteps }: StepIndicatorProps) {
+  const progressPercentage = Math.round(((currentStep - 1) / totalSteps) * 100);
+
   return (
     <div className="w-full mb-8">
+      {/* Progress Percentage */}
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-body-sm text-neutral-600">
+          Step {currentStep} of {totalSteps}
+        </span>
+        <span className="text-body-sm font-semibold text-primary-600">
+          {progressPercentage}% Complete
+        </span>
+      </div>
+
+      {/* Progress Bar */}
+      <div className="w-full h-2 bg-neutral-200 rounded-full mb-6 overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all duration-500 ease-out"
+          style={{ width: `${progressPercentage}%` }}
+        />
+      </div>
+
       <div className="flex items-center justify-between">
         {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => {
           const isCompleted = completedSteps.includes(step);

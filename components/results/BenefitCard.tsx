@@ -7,6 +7,7 @@ import { Card } from '@/components/shared/Card';
 import { Button } from '@/components/shared/Button';
 import { EligibilityMeter } from './EligibilityMeter';
 import { PrefillButton } from './PrefillButton';
+import { ApplicationChecklist } from './ApplicationChecklist';
 import {
   DollarSign,
   Clock,
@@ -245,6 +246,9 @@ export function BenefitCard({ result, quizData }: BenefitCardProps) {
 
             {/* Pre-fill Application Button */}
             <PrefillButton result={result} quizData={quizData} />
+
+            {/* Application Checklist */}
+            {result.isEligible && <ApplicationChecklist program={result.program} />}
           </div>
         )}
       </div>

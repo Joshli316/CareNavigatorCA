@@ -14,3 +14,22 @@ body {
 * {
   @apply antialiased;
 }
+
+/* Print styles */
+@media print {
+  body {
+    @apply bg-white;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  header {
+    display: none !important;
+  }
+
+  @page {
+    margin: 1cm;
+  }
+}

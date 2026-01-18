@@ -9,8 +9,9 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 ### Key Features
 
 - **Smart Eligibility Quiz**: 5-step guided form collecting location, disability, financial, and household information
-- **Intelligent Matching**: Evaluates 6 benefit programs with probability scoring (0-100%)
-- **Multi-State Support**: Currently supports California and Texas-specific programs
+- **Intelligent Matching**: Evaluates **34+ benefit programs** with probability scoring (0-100%)
+- **Geographic Focus**: Dallas-Fort Worth (DFW) metropolitan area, Texas
+- **Comprehensive Coverage**: Federal, Texas state, local DFW, nonprofit organizations, and Christian church special needs ministries
 - **Persistent Data**: Auto-saves quiz progress to browser localStorage
 - **Accessible Design**: WCAG 2.1 AA compliant with touch-friendly UI
 
@@ -39,25 +40,60 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 ├── lib/
 │   ├── context/            # React contexts (Quiz, Results)
 │   ├── rules/              # Benefit rules & eligibility engine
-│   │   ├── benefitRules.ts     # 6 program definitions
+│   │   ├── benefitRules.ts     # 34+ program definitions
 │   │   ├── eligibilityEngine.ts # Core matching logic
 │   │   └── constants/          # 2026 federal/state limits
 │   └── hooks/              # Custom React hooks
 └── types/                  # TypeScript interfaces
 
-## 💡 Benefits Included
+## 💡 Benefits Included (34+ Programs)
 
-### Federal Programs
-1. **SSI** (Supplemental Security Income) - $943/mo
-2. **SSDI** (Social Security Disability Insurance) - ~$1,537/mo
-3. **SNAP** (Food Assistance) - Varies by household
+### Federal Programs (13)
+- **SSI** (Supplemental Security Income) - $943/mo
+- **SSDI** (Social Security Disability Insurance) - ~$1,537/mo
+- **SNAP** (Food Assistance) - Varies by household
+- **WIC** (Women, Infants, Children) - ~$50/mo
+- **TANF** (Temporary Assistance for Needy Families) - ~$450/mo
+- **VA Disability Compensation** - ~$1,700/mo
+- **Medicaid** - Medical coverage
+- **Medicare Savings Programs** (QMB/SLMB/QI) - $180+/mo
+- **LIHEAP** (Energy Assistance) - Varies
+- **Lifeline** (Phone Service) - ~$30/mo discount
+- **Affordable Connectivity Program** (ACP) - $30/mo internet
+- **Section 8 Housing Choice Voucher** - 30% of income toward rent
+- Plus other federal programs
 
-### State Programs
-4. **California HCBS Waiver** - Home & community-based services
-5. **Texas STAR+PLUS Waiver** - Long-term care support
+### Texas State Programs (2)
+- **Texas STAR+PLUS Waiver** - Home & community-based services
+- **Texas Medicaid HCBS** - Personal attendant services, adaptive aids
 
-### Local Programs
-6. **Housing Assistance Grant** (Mock) - $500/mo rental assistance
+### Dallas-Fort Worth Local Programs (3)
+- **Dallas County Emergency Rental Assistance** - Rental/utility assistance
+- **Dallas Housing Authority** - Affordable housing
+- **Parkland Health** - Sliding scale medical care
+
+### DFW Nonprofit Organizations (6)
+- **United Way of Metropolitan Dallas (211)** - Emergency assistance (~$500)
+- **Modest Needs Self-Sufficiency Grants** - Up to $1,000 one-time
+- **Salvation Army North Texas** - Food, utilities, rent help (~$300)
+- **Catholic Charities Dallas** - Emergency aid, food pantries (~$400)
+- **North Texas Food Bank** - Food assistance through 200+ agencies
+- **The Stewpot Dallas** - Food, clothing, medical care, case management
+
+### Healthcare & Equipment Nonprofits (5)
+- **LIFE Center for Independent Living (Dallas)** - Home modifications, assistive tech
+- **Assistive Technology Program of Texas** - Device loans, financing
+- **Patient Advocate Foundation** - Medical bills, copays (~$500)
+- **HealthWell Foundation** - Prescriptions, insurance premiums (~$600)
+
+### Christian Church Special Needs Ministries (6+)
+- **Watermark Community Church (Dallas)** - Access Ministry
+- **First Baptist Dallas** - Special Needs Ministry
+- **Prestonwood Baptist Church (Plano)** - Special Friends Ministry
+- **Gateway Church (Southlake)** - Special Needs Ministry
+- **Lake Pointe Church (Rockwall)** - Exceptional Ministry
+- **Village Church (Flower Mound)** - Access Ministry
+- **Joni and Friends - North Texas Chapter**
 
 ## 🚀 Quick Start
 

@@ -10,6 +10,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'CareNavigator - Benefits Made Simple',
   description: 'Transform 100+ hours of benefits research into a 15-minute guided experience',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
 };
 
 export default function RootLayout({

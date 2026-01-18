@@ -6,21 +6,21 @@ export function Header() {
     <header className="bg-white border-b border-neutral-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-            <HeartHandshake className="w-8 h-8 text-primary-500" />
-            <span className="text-heading-sm text-neutral-900">
+          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 hover:opacity-80 transition-opacity">
+            <HeartHandshake className="w-6 h-6 sm:w-8 sm:h-8 text-primary-500" />
+            <span className="text-body-lg sm:text-heading-sm text-neutral-900">
               CareNavigator
             </span>
           </Link>
 
-          <nav className="flex items-center space-x-6">
-            <Link href="/quiz" className="text-body text-neutral-700 hover:text-primary-500 transition-colors">
-              Take Quiz
+          <nav className="flex items-center space-x-3 sm:space-x-6">
+            <Link href="/quiz" className="text-body-sm sm:text-body text-neutral-700 hover:text-primary-500 transition-colors">
+              Quiz
             </Link>
-            <Link href="/results" className="text-body text-neutral-700 hover:text-primary-500 transition-colors">
+            <Link href="/results" className="text-body-sm sm:text-body text-neutral-700 hover:text-primary-500 transition-colors">
               Results
             </Link>
-            <Link href="/vault" className="text-body text-neutral-700 hover:text-primary-500 transition-colors">
+            <Link href="/vault" className="hidden sm:inline text-body text-neutral-700 hover:text-primary-500 transition-colors">
               Vault
             </Link>
           </nav>

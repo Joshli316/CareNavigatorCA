@@ -6,6 +6,7 @@ import { useQuiz } from '@/lib/context/QuizContext';
 import { BenefitCategory } from '@/types/benefit';
 import { BenefitCard } from './BenefitCard';
 import { CategoryTabs } from './CategoryTabs';
+import { ExportResults } from './ExportResults';
 import { Sparkles } from 'lucide-react';
 
 export function ResultsDashboard() {
@@ -77,6 +78,11 @@ export function ResultsDashboard() {
               weeks
             </p>
           </div>
+        </div>
+
+        {/* Export Buttons */}
+        <div className="mt-6 pt-6 border-t border-primary-100">
+          <ExportResults results={results} quizData={quizState.quizData} />
         </div>
       </div>
 

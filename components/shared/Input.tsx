@@ -1,4 +1,5 @@
 import React from 'react';
+import { AlertCircle, Info } from 'lucide-react';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -46,14 +47,16 @@ export function Input({
         {...props}
       />
       {error && (
-        <p id={`${inputId}-error`} className="mt-2 text-body-sm text-danger" role="alert">
-          {error}
-        </p>
+        <div id={`${inputId}-error`} className="mt-2 flex items-start space-x-2" role="alert">
+          <AlertCircle className="w-4 h-4 text-error flex-shrink-0 mt-0.5" />
+          <p className="text-body-sm text-error font-medium">{error}</p>
+        </div>
       )}
       {!error && helperText && (
-        <p id={`${inputId}-helper`} className="mt-2 text-body-sm text-neutral-600">
-          {helperText}
-        </p>
+        <div id={`${inputId}-helper`} className="mt-2 flex items-start space-x-2">
+          <Info className="w-4 h-4 text-neutral-500 flex-shrink-0 mt-0.5" />
+          <p className="text-body-sm text-neutral-600">{helperText}</p>
+        </div>
       )}
     </div>
   );
