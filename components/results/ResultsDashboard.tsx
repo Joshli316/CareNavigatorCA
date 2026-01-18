@@ -82,7 +82,7 @@ export function ResultsDashboard() {
 
         {/* Export Buttons */}
         <div className="mt-6 pt-6 border-t border-primary-100">
-          <ExportResults results={results} quizData={quizState.quizData} />
+          <ExportResults results={results} quizData={quizState.data} />
         </div>
       </div>
 

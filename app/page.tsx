@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { Container } from '@/components/layout/Container';
-import { ArrowRight, Clock, Shield, Sparkles, ClipboardCheck, TrendingUp, FileCheck, Heart, Home, DollarSign, GraduationCap, Utensils, Wallet } from 'lucide-react';
+import { ArrowRight, Clock, Shield, Sparkles, ClipboardCheck, TrendingUp, FileCheck, Heart, Home as HomeIcon, DollarSign, GraduationCap, Utensils, Wallet } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -124,7 +124,7 @@ export default function Home() {
 
             <div className="bg-white border border-neutral-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-warning/20 rounded-full mb-3">
-                <Home className="w-6 h-6 text-warning" />
+                <HomeIcon className="w-6 h-6 text-warning" />
               </div>
               <h4 className="text-body font-semibold text-neutral-900 mb-1">Housing</h4>
               <p className="text-body-sm text-neutral-600">Section 8 & subsidies</p>
