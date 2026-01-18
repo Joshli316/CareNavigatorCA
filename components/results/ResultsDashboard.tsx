@@ -7,6 +7,7 @@ import { BenefitCategory } from '@/types/benefit';
 import { BenefitCard } from './BenefitCard';
 import { CategoryTabs } from './CategoryTabs';
 import { ExportResults } from './ExportResults';
+import { formatCurrency } from '@/lib/utils/format';
 import { Sparkles } from 'lucide-react';
 
 export function ResultsDashboard() {
@@ -74,7 +75,7 @@ export function ResultsDashboard() {
                   <span className="text-body-sm text-neutral-600 ml-2">
                     ({result.probability}% match
                     {typeof result.estimatedMonthlyBenefit === 'number' &&
-                      ` • ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(result.estimatedMonthlyBenefit)}/mo`
+                      ` • ${formatCurrency(result.estimatedMonthlyBenefit)}/mo`
                     })
                   </span>
                 </div>
@@ -101,13 +102,7 @@ export function ResultsDashboard() {
           <div>
             <p className="text-body-sm text-neutral-600 mb-1">Potential Monthly Value</p>
             <p className="text-heading-md font-bold text-primary-700">
-              {totalMonthlyBenefit > 0
-                ? new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                    minimumFractionDigits: 0,
-                  }).format(totalMonthlyBenefit)
-                : 'Varies'}
+              {formatCurrency(totalMonthlyBenefit)}
             </p>
           </div>
           <div>
