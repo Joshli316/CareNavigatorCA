@@ -1,0 +1,100 @@
+═══════════════════════════════════════════════════════════════
+   CARENAVIGATOR PROTOTYPE - HOW TO START (NO CODING NEEDED!)
+═══════════════════════════════════════════════════════════════
+
+🎯 SUPER SIMPLE METHOD:
+
+1. Open Terminal (press Command + Space, type "Terminal", press Enter)
+
+2. Copy and paste this ENTIRE line:
+
+   cd "/Users/andrew-mbp/Documents/claude projects/Care Navigator" && ./START_PROTOTYPE.sh
+
+3. Press Enter
+
+4. Wait 2-3 minutes (first time only)
+
+5. Open your browser and go to: http://localhost:3000
+
+6. You'll see the CareNavigator landing page!
+
+═══════════════════════════════════════════════════════════════
+
+💡 FIRST TIME? Install Node.js first:
+   → Go to: https://nodejs.org
+   → Download the "LTS" version
+   → Install it
+   → Then follow steps above
+
+═══════════════════════════════════════════════════════════════
+
+📱 TEST WITH TEXAS USER:
+
+Step 1 (Location):
+- State: Texas
+- County: Harris County
+- ZIP: 77001
+- Residency: 120 months
+
+Step 2 (Disability):
+- Has disability: ✓ YES
+- Types: Physical, Chronic illness
+- Receiving SSDI: ✓ YES
+- Has SSA determination: ✓ YES
+
+Step 3 (Financial):
+- Monthly income: $1100
+- Income type: SSDI
+- Assets: $800
+- Owns car: ✓ YES ($5000)
+
+Step 4 (Demographics):
+- Age: 42
+- Household size: 1
+- Assistance needed: Some assistance
+
+Step 5 (Review):
+- Click "See My Results"
+
+═══════════════════════════════════════════════════════════════
+
+✨ WHAT YOU'LL SEE:
+
+- SNAP: 85% eligible (food assistance)
+- TX STAR+PLUS: 75% eligible (healthcare services)
+- SSI: 30% eligible (with clear explanation of why)
+- Housing Grant: 60% eligible
+
+Each card shows:
+✓ What's working in your favor
+✗ What's blocking eligibility
+💡 How to improve your chances
+
+═══════════════════════════════════════════════════════════════
+
+🛑 TO STOP THE SERVER:
+
+Press Ctrl+C in the Terminal window
+
+═══════════════════════════════════════════════════════════════
+
+📞 NEED HELP?
+
+- Terminal won't open? Restart your Mac
+- "Command not found"? Install Node.js from nodejs.org
+- Port 3000 already in use? Close other programs using port 3000
+
+═══════════════════════════════════════════════════════════════
+
+🚀 READY TO SHOW INVESTORS?
+
+Once it's running locally:
+1. Take screenshots
+2. Record a screen video (QuickTime → New Screen Recording)
+3. Or deploy to Vercel for a live web link (I can help!)
+
+═══════════════════════════════════════════════════════════════
+
+Your prototype is 100% complete and ready to demo!
+
+Built with ❤️ for zero-coding-knowledge founders.

@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #0D9488;
+  --color-secondary: #3B82F6;
+}
+
+body {
+  @apply text-neutral-900 bg-neutral-50;
+}
+
+* {
+  @apply antialiased;
+}
