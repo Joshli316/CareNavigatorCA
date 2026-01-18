@@ -1,7 +1,8 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/shared/Button';
-import { Download, Printer, Share2 } from 'lucide-react';
+import { Download, Printer, Share2, RefreshCw } from 'lucide-react';
 import { EligibilityResult } from '@/types/benefit';
 import { QuizData } from '@/types/quiz';
 
@@ -11,6 +12,14 @@ interface ExportResultsProps {
 }
 
 export function ExportResults({ results, quizData }: ExportResultsProps) {
+  const router = useRouter();
+
+  const handleRetakeQuiz = () => {
+    // Clear results and go back to quiz start
+    localStorage.removeItem('carenavigator_results');
+    router.push('/quiz');
+  };
+
   const handlePrint = () => {
     window.print();
   };
@@ -71,6 +80,16 @@ export function ExportResults({ results, quizData }: ExportResultsProps) {
 
   return (
     <div className="flex flex-wrap gap-3 print:hidden">
+      <Button
+        onClick={handleRetakeQuiz}
+        variant="outline"
+        size="sm"
+        className="inline-flex items-center space-x-2"
+      >
+        <RefreshCw className="w-4 h-4" />
+        <span>Retake Quiz</span>
+      </Button>
+
       <Button
         onClick={handlePrint}
         variant="outline"
