@@ -4,6 +4,7 @@ import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { QuizProvider } from '@/lib/context/QuizContext';
 import { ResultsProvider } from '@/lib/context/ResultsContext';
+import { ErrorBoundary } from '@/components/shared/ErrorBoundary';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,14 +22,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QuizProvider>
-          <ResultsProvider>
-            <Header />
-            <main className="min-h-screen">
-              {children}
-            </main>
-          </ResultsProvider>
-        </QuizProvider>
+        <ErrorBoundary>
+          <QuizProvider>
+            <ResultsProvider>
+              <Header />
+              <main className="min-h-screen">
+                {children}
+              </main>
+            </ResultsProvider>
+          </QuizProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

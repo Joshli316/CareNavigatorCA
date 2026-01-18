@@ -32,7 +32,7 @@ export interface EligibilityRule {
   type: RuleType;
   field: string;
   operator: RuleOperator;
-  value: any;
+  value: string | number | boolean | string[] | number[];
   weight: number;
   isMandatory: boolean;
   failureMessage?: string;

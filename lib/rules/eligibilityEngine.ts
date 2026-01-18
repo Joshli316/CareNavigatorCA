@@ -68,7 +68,10 @@ export class EligibilityEngine {
       .filter((r) => r.passed)
       .reduce((sum, r) => sum + r.rule.weight, 0);
 
-    const probability = Math.round((passedWeight / totalWeight) * 100);
+    // Guard against division by zero
+    const probability = totalWeight > 0
+      ? Math.round((passedWeight / totalWeight) * 100)
+      : 0;
 
     const result = {
       programId: program.id,
@@ -117,14 +120,16 @@ export class EligibilityEngine {
         break;
       case RuleOperator.INCLUDES:
         if (Array.isArray(rule.value)) {
-          passed = rule.value.includes(actualValue);
+          // Type-safe array includes check
+          passed = (rule.value as (string | number)[]).includes(actualValue as string | number);
         } else {
           passed = actualValue === rule.value;
         }
         break;
       case RuleOperator.EXCLUDES:
         if (Array.isArray(rule.value)) {
-          passed = !rule.value.includes(actualValue);
+          // Type-safe array excludes check
+          passed = !(rule.value as (string | number)[]).includes(actualValue as string | number);
         } else {
           passed = actualValue !== rule.value;
         }
@@ -137,20 +142,39 @@ export class EligibilityEngine {
   }
 
   private getFieldValue(data: QuizData, path: string): any {
-    return path.split('.').reduce((obj, key) => obj?.[key], data as any);
+    // Guard against invalid inputs
+    if (!data || !path) {
+      console.warn(`getFieldValue called with invalid data or path`);
+      return undefined;
+    }
+
+    const value = path.split('.').reduce((obj, key) => obj?.[key], data as any);
+
+    // Log warning if field path returns undefined (helps debug rule definitions)
+    if (value === undefined) {
+      console.warn(`Field path "${path}" returned undefined - check rule definition`);
+    }
+
+    return value;
   }
 
   private calculateGap(rule: EligibilityRule, actualValue: any): string {
     if (
       rule.type === RuleType.INCOME_THRESHOLD &&
-      rule.operator === RuleOperator.LESS_THAN_OR_EQUAL
+      rule.operator === RuleOperator.LESS_THAN_OR_EQUAL &&
+      typeof rule.value === 'number' &&
+      typeof actualValue === 'number'
     ) {
       const difference = actualValue - rule.value;
       if (difference > 0) {
         return `Your income is $${difference} above the limit`;
       }
     }
-    if (rule.type === RuleType.ASSET_LIMIT) {
+    if (
+      rule.type === RuleType.ASSET_LIMIT &&
+      typeof rule.value === 'number' &&
+      typeof actualValue === 'number'
+    ) {
       const difference = actualValue - rule.value;
       if (difference > 0) {
         return `You have $${difference.toLocaleString()} over the asset limit`;
@@ -158,7 +182,9 @@ export class EligibilityEngine {
     }
     if (
       rule.type === RuleType.AGE_RANGE &&
-      rule.operator === RuleOperator.GREATER_THAN_OR_EQUAL
+      rule.operator === RuleOperator.GREATER_THAN_OR_EQUAL &&
+      typeof rule.value === 'number' &&
+      typeof actualValue === 'number'
     ) {
       const difference = rule.value - actualValue;
       if (difference > 0) {
@@ -168,6 +194,11 @@ export class EligibilityEngine {
     return '';
   }
 
+  // Helper function for currency-safe calculations (avoids floating point issues)
+  private safeCurrencyCalculation(value: number): number {
+    return Math.round(value * 100) / 100;
+  }
+
   private calculateBenefit(
     program: BenefitProgram,
     quizData: QuizData
@@ -175,9 +206,20 @@ export class EligibilityEngine {
     if (typeof program.estimatedMonthlyValue === 'number') {
       // For SSI, reduce benefit by countable income
       if (program.id === 'ssi-2026') {
-        const countableIncome = Math.max(0, quizData.financial.monthlyIncome - 20);
-        const reduction = countableIncome * 0.5;
-        return Math.max(0, program.estimatedMonthlyValue - reduction);
+        // TODO: Extract these constants to federalLimits2026.ts
+        const GENERAL_INCOME_EXCLUSION = 20;
+        const EARNED_INCOME_REDUCTION_RATE = 0.5;
+
+        const countableIncome = Math.max(
+          0,
+          quizData.financial.monthlyIncome - GENERAL_INCOME_EXCLUSION
+        );
+        const reduction = this.safeCurrencyCalculation(
+          countableIncome * EARNED_INCOME_REDUCTION_RATE
+        );
+        return this.safeCurrencyCalculation(
+          Math.max(0, program.estimatedMonthlyValue - reduction)
+        );
       }
       return program.estimatedMonthlyValue;
     }
@@ -283,14 +325,21 @@ export class EligibilityEngine {
 
     switch (rule.type) {
       case RuleType.INCOME_THRESHOLD:
-        if (rule.operator === RuleOperator.LESS_THAN_OR_EQUAL) {
+        if (
+          rule.operator === RuleOperator.LESS_THAN_OR_EQUAL &&
+          typeof rule.value === 'number' &&
+          typeof actualValue === 'number'
+        ) {
           const difference = actualValue - rule.value;
           return `✗ Your income (${formatValue(actualValue)}/mo) exceeds the limit by ${formatValue(difference)}/mo`;
         }
         break;
       case RuleType.ASSET_LIMIT:
-        const assetDiff = actualValue - rule.value;
-        return `✗ Your assets (${formatValue(actualValue)}) exceed the limit by ${formatValue(assetDiff)}`;
+        if (typeof rule.value === 'number' && typeof actualValue === 'number') {
+          const assetDiff = actualValue - rule.value;
+          return `✗ Your assets (${formatValue(actualValue)}) exceed the limit by ${formatValue(assetDiff)}`;
+        }
+        break;
       case RuleType.DISABILITY_REQUIRED:
         return `✗ This program requires a qualifying disability`;
       case RuleType.GEOGRAPHY_MATCH:
@@ -355,7 +404,11 @@ export class EligibilityEngine {
   ): string | null {
     switch (rule.type) {
       case RuleType.INCOME_THRESHOLD:
-        if (rule.operator === RuleOperator.LESS_THAN_OR_EQUAL) {
+        if (
+          rule.operator === RuleOperator.LESS_THAN_OR_EQUAL &&
+          typeof rule.value === 'number' &&
+          typeof actualValue === 'number'
+        ) {
           const difference = actualValue - rule.value;
           if (difference > 0) {
             return `→ If you reduce monthly income by $${difference.toLocaleString()}, you would meet the income requirement`;
@@ -364,9 +417,11 @@ export class EligibilityEngine {
         break;
 
       case RuleType.ASSET_LIMIT:
-        const assetDiff = actualValue - rule.value;
-        if (assetDiff > 0) {
-          return `→ If you reduce assets by $${assetDiff.toLocaleString()} (exempt assets like your home and car don't count), you would meet the asset requirement`;
+        if (typeof rule.value === 'number' && typeof actualValue === 'number') {
+          const assetDiff = actualValue - rule.value;
+          if (assetDiff > 0) {
+            return `→ If you reduce assets by $${assetDiff.toLocaleString()} (exempt assets like your home and car don't count), you would meet the asset requirement`;
+          }
         }
         break;
 
@@ -377,7 +432,11 @@ export class EligibilityEngine {
         break;
 
       case RuleType.AGE_RANGE:
-        if (rule.operator === RuleOperator.GREATER_THAN_OR_EQUAL) {
+        if (
+          rule.operator === RuleOperator.GREATER_THAN_OR_EQUAL &&
+          typeof rule.value === 'number' &&
+          typeof actualValue === 'number'
+        ) {
           const ageDiff = rule.value - actualValue;
           if (ageDiff > 0) {
             return `→ You will become eligible in ${ageDiff} years when you turn ${rule.value}`;
