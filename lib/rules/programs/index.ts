@@ -42,6 +42,29 @@ import {
   PATIENT_ADVOCATE_FOUNDATION,
   HEALTHWELL_FOUNDATION,
   PARKLAND_HEALTH,
+  // Adaptive Sports
+  DFW_ADAPTIVE_SPORTS,
+  RISE_ADAPTIVE_SPORTS,
+  DALLAS_WHEELCHAIR_MAVS,
+  MIRACLE_LEAGUE_DFW,
+  YMCA_CHAMPIONS,
+  ARISE_SPECIAL_NEEDS,
+  DALLAS_ADAPTED_AQUATICS,
+  // Foster Care & Orphan Support
+  HOPE_COTTAGE,
+  BUCKNER_INTERNATIONAL,
+  CASA_DALLAS,
+  CASA_TARRANT,
+  JONATHANS_PLACE,
+  EMBRACE_TEXAS,
+  BRAVELOVE,
+  // Faith-Based Disability
+  WELL_COMMUNITY,
+  JEWISH_FAMILY_SERVICE,
+  MISSION_ARLINGTON,
+  POSITIVE_REFLECTION,
+  GOOD_WORD_MINISTRIES,
+  FAITH_IN_TEXAS,
 } from './nonprofits';
 
 import {
@@ -82,7 +105,7 @@ import {
   TX_WEATHERIZATION,
 } from './texas';
 
-// All programs registry (60 TOTAL PROGRAMS - TEXAS/DFW FOCUSED)
+// All programs registry (80 TOTAL PROGRAMS - TEXAS/DFW FOCUSED)
 export const BENEFIT_PROGRAMS: BenefitProgram[] = [
   // ============================================
   // FEDERAL INCOME SUPPORT (4)
@@ -176,6 +199,38 @@ export const BENEFIT_PROGRAMS: BenefitProgram[] = [
   PATIENT_ADVOCATE_FOUNDATION,
   HEALTHWELL_FOUNDATION,
   PARKLAND_HEALTH,
+
+  // ============================================
+  // DFW ADAPTIVE SPORTS PROGRAMS (7)
+  // ============================================
+  DFW_ADAPTIVE_SPORTS,
+  RISE_ADAPTIVE_SPORTS,
+  DALLAS_WHEELCHAIR_MAVS,
+  MIRACLE_LEAGUE_DFW,
+  YMCA_CHAMPIONS,
+  ARISE_SPECIAL_NEEDS,
+  DALLAS_ADAPTED_AQUATICS,
+
+  // ============================================
+  // DFW FOSTER CARE & ORPHAN SUPPORT (7)
+  // ============================================
+  HOPE_COTTAGE,
+  BUCKNER_INTERNATIONAL,
+  CASA_DALLAS,
+  CASA_TARRANT,
+  JONATHANS_PLACE,
+  EMBRACE_TEXAS,
+  BRAVELOVE,
+
+  // ============================================
+  // DFW FAITH-BASED DISABILITY NONPROFITS (6)
+  // ============================================
+  WELL_COMMUNITY,
+  JEWISH_FAMILY_SERVICE,
+  MISSION_ARLINGTON,
+  POSITIVE_REFLECTION,
+  GOOD_WORD_MINISTRIES,
+  FAITH_IN_TEXAS,
 
   // ============================================
   // TEXAS RESOURCE LINE (1)

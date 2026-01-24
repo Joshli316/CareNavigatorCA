@@ -9,7 +9,7 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 ### Key Features
 
 - **Smart Eligibility Quiz**: 5-step guided form collecting location, disability, financial, and household information
-- **Intelligent Matching**: Evaluates **60+ benefit programs** with probability scoring (0-100%)
+- **Intelligent Matching**: Evaluates **80+ benefit programs** with probability scoring (0-100%)
 - **Geographic Focus**: Texas statewide with Dallas-Fort Worth (DFW) local programs
 - **Comprehensive Coverage**: Federal, Texas state (25+ programs), local DFW, nonprofit organizations, and Christian church special needs ministries
 - **Persistent Data**: Auto-saves quiz progress to browser localStorage
@@ -46,7 +46,7 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 │   │   │   ├── federal.ts      # 12 federal programs
 │   │   │   ├── texas.ts        # 25 Texas state programs (NEW)
 │   │   │   ├── housing.ts      # 7 housing programs
-│   │   │   ├── nonprofits.ts   # 13 nonprofit programs
+│   │   │   ├── nonprofits.ts   # 33 nonprofit programs
 │   │   │   └── churches.ts     # 7 church ministries
 │   │   ├── eligibilityEngine.ts # Core matching logic
 │   │   └── constants/          # 2026 federal/state limits
@@ -61,7 +61,7 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 
 ```
 
-## 💡 Benefits Included (60+ Programs)
+## 💡 Benefits Included (80+ Programs)
 
 ### Federal Programs (12)
 - **SSI** (Supplemental Security Income) - $943/mo
@@ -134,6 +134,32 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 - **Patient Advocate Foundation** - Medical bills, copays (~$500)
 - **HealthWell Foundation** - Prescriptions, insurance premiums (~$600)
 - **Parkland Health** - Sliding scale medical care
+
+### DFW Adaptive Sports Programs (7 NEW!)
+- **DFW Adaptive Sports Coalition** - Wheelchair basketball, sled hockey, blind fencing, 10+ sports
+- **RISE Adaptive Sports** - FREE rugby, volleyball, swimming, handcycling
+- **Dallas Jr. Wheelchair Mavericks** - Youth wheelchair basketball (ages 5-18)
+- **Miracle League DFW** - Baseball, basketball, soccer for special needs
+- **YMCA Champions League** - FREE monthly multi-sport league
+- **Arise Special Needs Sports** - Year-round adaptive sports
+- **Dallas Adapted Aquatics** - Swimming lessons for persons with disabilities
+
+### DFW Foster Care & Orphan Support (7 NEW!)
+- **Hope Cottage** - 106-year nonprofit for adoption & foster care
+- **Buckner International** - Foster care, adoption, Buckner NextStep
+- **CASA of Dallas County** - Court advocates for foster children
+- **CASA of Tarrant County** - Advocates for Fort Worth area foster children
+- **Jonathan's Place** - Emergency shelter for abused/neglected children
+- **Embrace Texas** - Church-based foster family support
+- **BraveLove** - Birth mother support and adoption advocacy
+
+### DFW Faith-Based Disability Nonprofits (6 NEW!)
+- **The Well Community** - Faith-based support for adults with mental illness
+- **Jewish Family Service of Greater Dallas** - Counseling, disability inclusion (serves all faiths)
+- **Mission Arlington** - Emergency assistance, medical, dental care
+- **Positive Reflection Ministries** - Emergency aid for disabled/elderly/low-income
+- **Good Word Ministries** - Programs for deaf and disabled individuals
+- **Faith in Texas** - Multi-faith (Christian, Jewish, Muslim) justice coalition
 
 ### Christian Church Special Needs Ministries (7)
 - **Watermark Community Church (Dallas)** - Access Ministry
@@ -337,5 +363,5 @@ This prototype is for demonstration purposes only. Not intended for production u
 
 **Built with Next.js, TypeScript, and Tailwind CSS**
 
-🚀 **Status**: Prototype v1.2 - Texas Expansion (60+ Programs)
+🚀 **Status**: Prototype v1.3 - DFW Nonprofits Expansion (80+ Programs)
 🌐 **Live Demo**: https://care-navigator.pages.dev
