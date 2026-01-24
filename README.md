@@ -9,9 +9,9 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 ### Key Features
 
 - **Smart Eligibility Quiz**: 5-step guided form collecting location, disability, financial, and household information
-- **Intelligent Matching**: Evaluates **34+ benefit programs** with probability scoring (0-100%)
-- **Geographic Focus**: Dallas-Fort Worth (DFW) metropolitan area, Texas
-- **Comprehensive Coverage**: Federal, Texas state, local DFW, nonprofit organizations, and Christian church special needs ministries
+- **Intelligent Matching**: Evaluates **60+ benefit programs** with probability scoring (0-100%)
+- **Geographic Focus**: Texas statewide with Dallas-Fort Worth (DFW) local programs
+- **Comprehensive Coverage**: Federal, Texas state (25+ programs), local DFW, nonprofit organizations, and Christian church special needs ministries
 - **Persistent Data**: Auto-saves quiz progress to browser localStorage
 - **Accessible Design**: WCAG 2.1 AA compliant with touch-friendly UI
 
@@ -44,7 +44,8 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 │   ├── rules/              # Benefit rules & eligibility engine
 │   │   ├── programs/           # Organized by category
 │   │   │   ├── federal.ts      # 12 federal programs
-│   │   │   ├── housing.ts      # 4 housing programs
+│   │   │   ├── texas.ts        # 25 Texas state programs (NEW)
+│   │   │   ├── housing.ts      # 7 housing programs
 │   │   │   ├── nonprofits.ts   # 13 nonprofit programs
 │   │   │   └── churches.ts     # 7 church ministries
 │   │   ├── eligibilityEngine.ts # Core matching logic
@@ -60,7 +61,7 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 
 ```
 
-## 💡 Benefits Included (34+ Programs)
+## 💡 Benefits Included (60+ Programs)
 
 ### Federal Programs (12)
 - **SSI** (Supplemental Security Income) - $943/mo
@@ -76,11 +77,48 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 - **Affordable Connectivity Program** (ACP) - $30/mo internet
 - **Texas STAR+PLUS Waiver** - Home & community-based services
 
-### Housing Programs (4)
+### Texas State Programs (25 NEW!)
+**Healthcare & Waivers:**
+- **Texas CHIP** - Children's health insurance (up to 200% FPL)
+- **Texas HCS Waiver** - Home & community-based services for IDD
+- **Texas CLASS Waiver** - Community living for related conditions (cerebral palsy, etc.)
+- **Texas DBMD Waiver** - Deaf-blind with multiple disabilities services
+- **Texas MDCP** - Medically dependent children program (ages 0-20)
+- **Texas Home Living (TxHmL)** - Day habilitation, respite, employment support
+- **Texas Children's Autism Program** - Free ABA therapy (ages 3-15, 180 hrs/year)
+- **Texas Community Attendant Services** - In-home personal care
+- **Texas Primary Home Care** - Home supervision for elderly/disabled
+- **Texas PACE** - All-inclusive care for elderly (55+)
+- **Texas Blind Services** - Training, adaptive tech for blind/visually impaired
+- **Texas Medicaid Buy-In** - Coverage for working adults with disabilities
+
+**Disability Services:**
+- **Texas Vocational Rehabilitation** - Free job training, career counseling
+- **Texas ABLE Account** - Tax-free disability savings ($19,000/year)
+- **Texas 2-1-1** - 24/7 helpline for all assistance programs
+
+**Veterans Programs:**
+- **Texas Veterans Property Tax Exemption** - Full exemption at 100% disability
+- **Texas Hazlewood Act** - Free college tuition (150 credit hours)
+- **Texas Veterans Free Driver License** - Free DL at 60%+ disability
+- **Texas Parklands Passport** - Free state park entry
+- **Texas Veterans Mental Health** - Free counseling, peer support
+- **Texas Fund for Veterans' Assistance** - Emergency financial aid
+
+**Housing & Utilities:**
+- **Texas TBRA** - Rental assistance up to 5 years (no limit for PWD)
+- **Texas Project Access** - Section 8 for institution-to-community transitions
+- **Texas CEAP** - Utility bill assistance (up to 150% FPL)
+- **Texas Weatherization** - Free home energy improvements
+
+### Housing Programs (7)
 - **Section 8 Housing Choice Voucher** - 30% of income toward rent
 - **Local Housing Assistance Grant** - ~$500/mo
 - **Dallas Housing Authority** - Affordable housing
 - **Dallas County Emergency Rental Assistance** - Rental/utility assistance
+- **Texas TBRA** - Tenant-Based Rental Assistance
+- **Texas Project Access** - Transition housing vouchers
+- **Texas Veterans Property Tax Exemption** - Full exemption for 100% disabled vets
 
 ### DFW Nonprofit Organizations (13)
 - **Disability Emergency Assistance Fund** - One-time emergency grants
@@ -263,7 +301,7 @@ The prototype is fully responsive and works on:
 - [ ] Server-side eligibility evaluation
 
 ### Phase 3 (Scale)
-- [ ] 50+ benefit programs
+- [x] 50+ benefit programs ✅ (60+ now!)
 - [ ] All 50 states support
 - [ ] Admin UI for rule editing
 - [ ] Case worker portal
@@ -299,5 +337,5 @@ This prototype is for demonstration purposes only. Not intended for production u
 
 **Built with Next.js, TypeScript, and Tailwind CSS**
 
-🚀 **Status**: Prototype v1.1 - Refactored & Production-Ready
+🚀 **Status**: Prototype v1.2 - Texas Expansion (60+ Programs)
 🌐 **Live Demo**: https://care-navigator.pages.dev

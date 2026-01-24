@@ -3,6 +3,7 @@ export * from './federal';
 export * from './housing';
 export * from './nonprofits';
 export * from './churches';
+export * from './texas';
 
 import { BenefitProgram } from '@/types/benefit';
 import {
@@ -53,36 +54,112 @@ import {
   JONI_AND_FRIENDS_NTX,
 } from './churches';
 
-// All programs registry (34 TOTAL PROGRAMS - TEXAS/DFW FOCUSED)
+import {
+  TX_VOCATIONAL_REHAB,
+  TX_CHIP,
+  TX_CEAP,
+  TX_HCS_WAIVER,
+  TX_CLASS_WAIVER,
+  TX_DBMD_WAIVER,
+  TX_MDCP,
+  TX_HOME_LIVING,
+  TX_ABLE,
+  TX_AUTISM_PROGRAM,
+  TX_COMMUNITY_ATTENDANT,
+  TX_PRIMARY_HOME_CARE,
+  TX_PACE,
+  TX_BLIND_SERVICES,
+  TX_211,
+  TX_VET_PROPERTY_TAX,
+  TX_HAZLEWOOD,
+  TX_VET_DL,
+  TX_PARKLANDS_PASSPORT,
+  TX_TBRA,
+  TX_PROJECT_ACCESS,
+  TX_MEDICAID_BUY_IN,
+  TX_VET_MENTAL_HEALTH,
+  TX_FUND_VET_ASSISTANCE,
+  TX_WEATHERIZATION,
+} from './texas';
+
+// All programs registry (60 TOTAL PROGRAMS - TEXAS/DFW FOCUSED)
 export const BENEFIT_PROGRAMS: BenefitProgram[] = [
-  // Federal Income Support (4)
+  // ============================================
+  // FEDERAL INCOME SUPPORT (4)
+  // ============================================
   SSI_PROGRAM,
   SSDI_PROGRAM,
   TANF_PROGRAM,
   VA_DISABILITY_COMPENSATION,
 
-  // Healthcare Programs (4)
+  // ============================================
+  // FEDERAL HEALTHCARE (3)
+  // ============================================
   MEDICAID_PROGRAM,
   MEDICARE_SAVINGS_PROGRAM,
   TX_STAR_PLUS_WAIVER,
+
+  // ============================================
+  // TEXAS STATE HEALTHCARE & WAIVERS (12)
+  // ============================================
+  TX_CHIP,
+  TX_HCS_WAIVER,
+  TX_CLASS_WAIVER,
+  TX_DBMD_WAIVER,
+  TX_MDCP,
+  TX_HOME_LIVING,
+  TX_AUTISM_PROGRAM,
+  TX_COMMUNITY_ATTENDANT,
+  TX_PRIMARY_HOME_CARE,
+  TX_PACE,
+  TX_BLIND_SERVICES,
+  TX_MEDICAID_BUY_IN,
+
+  // ============================================
+  // TEXAS DISABILITY SERVICES (3)
+  // ============================================
+  TX_VOCATIONAL_REHAB,
+  TX_ABLE,
   ASSISTIVE_TECH_TEXAS,
 
-  // Food Assistance (2)
+  // ============================================
+  // FOOD ASSISTANCE (2)
+  // ============================================
   SNAP_PROGRAM,
   WIC_PROGRAM,
 
-  // Utilities & Communication (3)
+  // ============================================
+  // UTILITIES & ENERGY (5)
+  // ============================================
   LIHEAP_PROGRAM,
   LIFELINE_PROGRAM,
   ACP_PROGRAM,
+  TX_CEAP,
+  TX_WEATHERIZATION,
 
-  // Housing Programs (4)
+  // ============================================
+  // HOUSING PROGRAMS (7)
+  // ============================================
   SECTION_8_VOUCHER,
   HOUSING_GRANT_PROGRAM,
   DALLAS_HOUSING_AUTHORITY,
   DALLAS_RENTAL_ASSISTANCE,
+  TX_TBRA,
+  TX_PROJECT_ACCESS,
+  TX_VET_PROPERTY_TAX,
 
-  // Nonprofit Emergency Assistance (7)
+  // ============================================
+  // TEXAS VETERANS PROGRAMS (6)
+  // ============================================
+  TX_HAZLEWOOD,
+  TX_VET_DL,
+  TX_PARKLANDS_PASSPORT,
+  TX_VET_MENTAL_HEALTH,
+  TX_FUND_VET_ASSISTANCE,
+
+  // ============================================
+  // NONPROFIT EMERGENCY ASSISTANCE (7)
+  // ============================================
   NONPROFIT_EMERGENCY_FUND,
   UNITED_WAY_DALLAS,
   MODEST_NEEDS,
@@ -91,14 +168,23 @@ export const BENEFIT_PROGRAMS: BenefitProgram[] = [
   NORTH_TEXAS_FOOD_BANK,
   STEWPOT_DALLAS,
 
-  // Nonprofit Healthcare & Equipment (6)
+  // ============================================
+  // NONPROFIT HEALTHCARE & EQUIPMENT (5)
+  // ============================================
   ASSISTIVE_TECH_GRANT,
   LIFE_CENTER_ILC,
   PATIENT_ADVOCATE_FOUNDATION,
   HEALTHWELL_FOUNDATION,
   PARKLAND_HEALTH,
 
-  // Christian Churches with Special Needs Ministries (7)
+  // ============================================
+  // TEXAS RESOURCE LINE (1)
+  // ============================================
+  TX_211,
+
+  // ============================================
+  // CHRISTIAN CHURCHES WITH SPECIAL NEEDS MINISTRIES (7)
+  // ============================================
   WATERMARK_ACCESS_MINISTRY,
   FIRST_BAPTIST_DALLAS,
   PRESTONWOOD_SPECIAL_FRIENDS,
@@ -119,4 +205,14 @@ export function getProgramsByState(state: string): BenefitProgram[] {
     }
     return true;
   });
+}
+
+// Helper function to get programs by category
+export function getProgramsByCategory(category: string): BenefitProgram[] {
+  return BENEFIT_PROGRAMS.filter(program => program.category === category);
+}
+
+// Get total program count
+export function getTotalProgramCount(): number {
+  return BENEFIT_PROGRAMS.length;
 }
