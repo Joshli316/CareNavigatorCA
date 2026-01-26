@@ -65,6 +65,23 @@ import {
   POSITIVE_REFLECTION,
   GOOD_WORD_MINISTRIES,
   FAITH_IN_TEXAS,
+  // Transportation
+  DART_PARATRANSIT,
+  TRINITY_METRO_ACCESS,
+  MY_RIDE_DALLAS,
+  // Respite Care
+  NCTAAA_RESPITE,
+  ARISE_RESPITE,
+  SPECIAL_BIRDS,
+  // Legal Aid
+  DISABILITY_RIGHTS_TX,
+  LEGAL_AID_NWT,
+  DVAP,
+  // Dental & Vision
+  TEXAS_MISSION_MERCY,
+  MERCY_CLINIC_FW,
+  LIONS_VISION_DFW,
+  ESSILOR_VISION,
 } from './nonprofits';
 
 import {
@@ -75,6 +92,18 @@ import {
   LAKE_POINTE_EXCEPTIONAL,
   VILLAGE_CHURCH_ACCESS,
   JONI_AND_FRIENDS_NTX,
+  // Methodist
+  HPUMC_BELONG,
+  FUMC_ALLEN,
+  // Catholic
+  ST_RITA_FW,
+  ALL_SAINTS_FW,
+  ST_MONICA_DALLAS,
+  // Episcopal
+  ST_STEPHENS_HURST,
+  // Lutheran
+  REDEEMER_LUTHERAN,
+  STONEBRIAR_GIFT,
 } from './churches';
 
 import {
@@ -105,7 +134,7 @@ import {
   TX_WEATHERIZATION,
 } from './texas';
 
-// All programs registry (80 TOTAL PROGRAMS - TEXAS/DFW FOCUSED)
+// All programs registry (100+ TOTAL PROGRAMS - TEXAS/DFW FOCUSED)
 export const BENEFIT_PROGRAMS: BenefitProgram[] = [
   // ============================================
   // FEDERAL INCOME SUPPORT (4)
@@ -238,7 +267,36 @@ export const BENEFIT_PROGRAMS: BenefitProgram[] = [
   TX_211,
 
   // ============================================
-  // CHRISTIAN CHURCHES WITH SPECIAL NEEDS MINISTRIES (7)
+  // DFW TRANSPORTATION (3)
+  // ============================================
+  DART_PARATRANSIT,
+  TRINITY_METRO_ACCESS,
+  MY_RIDE_DALLAS,
+
+  // ============================================
+  // DFW RESPITE CARE (3)
+  // ============================================
+  NCTAAA_RESPITE,
+  ARISE_RESPITE,
+  SPECIAL_BIRDS,
+
+  // ============================================
+  // DFW LEGAL AID (3)
+  // ============================================
+  DISABILITY_RIGHTS_TX,
+  LEGAL_AID_NWT,
+  DVAP,
+
+  // ============================================
+  // DFW DENTAL & VISION (4)
+  // ============================================
+  TEXAS_MISSION_MERCY,
+  MERCY_CLINIC_FW,
+  LIONS_VISION_DFW,
+  ESSILOR_VISION,
+
+  // ============================================
+  // BAPTIST CHURCHES (7)
   // ============================================
   WATERMARK_ACCESS_MINISTRY,
   FIRST_BAPTIST_DALLAS,
@@ -247,6 +305,30 @@ export const BENEFIT_PROGRAMS: BenefitProgram[] = [
   LAKE_POINTE_EXCEPTIONAL,
   VILLAGE_CHURCH_ACCESS,
   JONI_AND_FRIENDS_NTX,
+
+  // ============================================
+  // METHODIST CHURCHES (2)
+  // ============================================
+  HPUMC_BELONG,
+  FUMC_ALLEN,
+
+  // ============================================
+  // CATHOLIC CHURCHES (3)
+  // ============================================
+  ST_RITA_FW,
+  ALL_SAINTS_FW,
+  ST_MONICA_DALLAS,
+
+  // ============================================
+  // EPISCOPAL CHURCHES (1)
+  // ============================================
+  ST_STEPHENS_HURST,
+
+  // ============================================
+  // LUTHERAN & OTHER CHURCHES (2)
+  // ============================================
+  REDEEMER_LUTHERAN,
+  STONEBRIAR_GIFT,
 ];
 
 // Helper function to get state-specific programs

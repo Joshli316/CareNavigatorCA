@@ -9,7 +9,7 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 ### Key Features
 
 - **Smart Eligibility Quiz**: 5-step guided form collecting location, disability, financial, and household information
-- **Intelligent Matching**: Evaluates **80+ benefit programs** with probability scoring (0-100%)
+- **Intelligent Matching**: Evaluates **100+ benefit programs** with probability scoring (0-100%)
 - **Geographic Focus**: Texas statewide with Dallas-Fort Worth (DFW) local programs
 - **Comprehensive Coverage**: Federal, Texas state (25+ programs), local DFW, nonprofit organizations, and Christian church special needs ministries
 - **Persistent Data**: Auto-saves quiz progress to browser localStorage
@@ -61,7 +61,7 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 
 ```
 
-## 💡 Benefits Included (80+ Programs)
+## 💡 Benefits Included (100+ Programs)
 
 ### Federal Programs (12)
 - **SSI** (Supplemental Security Income) - $943/mo
@@ -161,7 +161,28 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 - **Good Word Ministries** - Programs for deaf and disabled individuals
 - **Faith in Texas** - Multi-faith (Christian, Jewish, Muslim) justice coalition
 
-### Christian Church Special Needs Ministries (7)
+### DFW Transportation (3 NEW!)
+- **DART Paratransit** - Curb-to-curb transport for disabilities (Dallas, Plano, Garland, Irving, Richardson)
+- **Trinity Metro ACCESS** - Fort Worth/Tarrant County paratransit
+- **My Ride Dallas** - Free Medicaid medical transport
+
+### DFW Respite Care (3 NEW!)
+- **North Central Texas AAA** - Up to $1,000 in respite vouchers for family caregivers
+- **Arise Special Needs Respite** - Overnight respite, social skills, community outings
+- **Special Birds Family Nursing** - Fort Worth respite care
+
+### DFW Legal Aid (3 NEW!)
+- **Disability Rights Texas (Dallas)** - Free disability rights legal advocacy
+- **Legal Aid of NorthWest Texas** - Free civil legal services for low-income
+- **Dallas Volunteer Attorney Program** - Free legal help in Dallas County
+
+### DFW Dental & Vision (4 NEW!)
+- **Texas Mission of Mercy** - Free dental at traveling clinics (no ID required)
+- **Mercy Clinic Friends (Fort Worth)** - Free medical, dental, pharmacy
+- **Lions Club Vision** - Free eye exams and glasses
+- **Essilor Vision Foundation** - Free glasses for children
+
+### Baptist Churches (7)
 - **Watermark Community Church (Dallas)** - Access Ministry
 - **First Baptist Dallas** - Special Needs Ministry
 - **Prestonwood Baptist Church (Plano)** - Special Friends Ministry
@@ -169,6 +190,22 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 - **Lake Pointe Church (Rockwall)** - Exceptional Ministry
 - **Village Church (Flower Mound)** - Access Ministry
 - **Joni and Friends - North Texas Chapter**
+
+### Methodist Churches (2 NEW!)
+- **Highland Park UMC** - Belong disABILITY Ministry
+- **First UMC Allen** - Special Kids Ministry (buddy system)
+
+### Catholic Churches (3 NEW!)
+- **St. Rita Parish (Fort Worth)** - Deaf & Special Needs Ministry
+- **All Saints Catholic (Fort Worth)** - ASL interpreted Mass
+- **St. Monica Catholic (Dallas)** - Interpreted children's Mass
+
+### Episcopal Churches (1 NEW!)
+- **St. Stephen's Episcopal (Hurst)** - ASL interpreted services
+
+### Lutheran & Other Churches (2 NEW!)
+- **Redeemer Lutheran (Dallas)** - Disability-inclusive worship
+- **Stonebriar Community Church (Frisco)** - GIFT Ministry
 
 ## 🚀 Quick Start
 
@@ -363,5 +400,5 @@ This prototype is for demonstration purposes only. Not intended for production u
 
 **Built with Next.js, TypeScript, and Tailwind CSS**
 
-🚀 **Status**: Prototype v1.3 - DFW Nonprofits Expansion (80+ Programs)
+🚀 **Status**: Prototype v1.4 - Full DFW Coverage (100+ Programs)
 🌐 **Live Demo**: https://care-navigator.pages.dev
