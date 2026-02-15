@@ -1,5 +1,10 @@
+import type { Metadata } from 'next';
 import { Container } from '@/components/layout/Container';
 import { QuizContainer } from '@/components/quiz/QuizContainer';
+
+export const metadata: Metadata = {
+  title: 'Eligibility Assessment',
+};
 
 export default function QuizPage() {
   return (

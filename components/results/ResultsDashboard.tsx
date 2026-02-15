@@ -1,32 +1,44 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useResults } from '@/lib/context/ResultsContext';
 import { useQuiz } from '@/lib/context/QuizContext';
+import { trackEvent } from '@/lib/utils/analytics';
 import { BenefitCategory } from '@/types/benefit';
 import { BenefitCard } from './BenefitCard';
-import { CategoryTabs } from './CategoryTabs';
+import { FilterBar } from './FilterBar';
 import { ExportResults } from './ExportResults';
+import { EligibilityFilter } from '@/lib/context/ResultsContext';
 import { formatCurrency } from '@/lib/utils/format';
-import { Sparkles } from 'lucide-react';
+import { useTracker, STATUS_CONFIG } from '@/lib/context/TrackerContext';
 
 export function ResultsDashboard() {
-  const { results, filteredResults, selectedCategory, setSelectedCategory } = useResults();
+  const { results, filteredResults, selectedCategory, setSelectedCategory, eligibilityFilter, setEligibilityFilter } = useResults();
   const { state: quizState } = useQuiz();
+  const { counts: trackerCounts } = useTracker();
+
+  useEffect(() => {
+    if (results.length > 0) {
+      trackEvent('results_view');
+    }
+  }, [results.length]);
 
   if (results.length === 0) {
     return (
-      <div className="text-center py-12">
-        <Sparkles className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
-        <h2 className="text-heading-md text-neutral-900 mb-2">No Results Yet</h2>
-        <p className="text-body text-neutral-600">
-          Complete the quiz to see your personalized benefits roadmap.
+      <div className="py-24 text-center">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent-50 mb-6">
+          <svg className="w-8 h-8 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+        </div>
+        <h2 className="text-2xl font-medium text-gray-900 mb-2">No results yet</h2>
+        <p className="text-gray-500 max-w-sm mx-auto">
+          Complete the assessment to discover programs you may qualify for.
         </p>
       </div>
     );
   }
 
-  // Memoize category counts to prevent recalculation on every render
   const categoryCounts = useMemo(() => {
     return results.reduce((counts, result) => {
       counts['all'] = (counts['all'] || 0) + 1;
@@ -35,19 +47,30 @@ export function ResultsDashboard() {
     }, {} as Record<BenefitCategory | 'all', number>);
   }, [results]);
 
-  // Memoize total monthly benefit calculation
+  const eligibilityCounts = useMemo(() => {
+    return results.reduce((counts, result) => {
+      counts['all'] = (counts['all'] || 0) + 1;
+      if (result.probability >= 70) {
+        counts['likely'] = (counts['likely'] || 0) + 1;
+      } else if (result.probability >= 40) {
+        counts['possible'] = (counts['possible'] || 0) + 1;
+      } else {
+        counts['unlikely'] = (counts['unlikely'] || 0) + 1;
+      }
+      return counts;
+    }, {} as Record<EligibilityFilter, number>);
+  }, [results]);
+
   const totalMonthlyBenefit = useMemo(() => {
     return results
       .filter(r => r.isEligible && typeof r.estimatedMonthlyBenefit === 'number')
       .reduce((sum, r) => sum + r.estimatedMonthlyBenefit, 0);
   }, [results]);
 
-  // Get top 3 priority programs to apply to first
   const priorityPrograms = useMemo(() => {
     return results
       .filter(r => r.isEligible)
       .sort((a, b) => {
-        // Sort by probability desc, then monthly benefit desc
         if (b.probability !== a.probability) return b.probability - a.probability;
         const aBenefit = typeof a.estimatedMonthlyBenefit === 'number' ? a.estimatedMonthlyBenefit : 0;
         const bBenefit = typeof b.estimatedMonthlyBenefit === 'number' ? b.estimatedMonthlyBenefit : 0;
@@ -57,112 +80,150 @@ export function ResultsDashboard() {
   }, [results]);
 
   return (
-    <div className="space-y-8">
-      {/* Priority Programs Banner */}
-      {priorityPrograms.length > 0 && (
-        <div className="bg-success/10 border-2 border-success rounded-card p-6">
-          <h3 className="text-heading-sm text-neutral-900 mb-3 font-bold">
-            🎯 Start with these programs first:
-          </h3>
-          <ul className="space-y-2">
-            {priorityPrograms.map((result, index) => (
-              <li key={result.programId} className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-6 h-6 bg-success text-white rounded-full flex items-center justify-center text-body-sm font-bold">
-                  {index + 1}
-                </span>
-                <div className="flex-1">
-                  <span className="font-semibold text-neutral-900">{result.program.name}</span>
-                  <span className="text-body-sm text-neutral-600 ml-2">
-                    ({result.probability}% match
-                    {typeof result.estimatedMonthlyBenefit === 'number' &&
-                      ` • ${formatCurrency(result.estimatedMonthlyBenefit)}/mo`
-                    })
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Summary Header */}
-      <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-card p-8">
-        <h2 className="text-heading-lg text-neutral-900 mb-2">Your Benefits Roadmap</h2>
-        <p className="text-body text-neutral-700 mb-6">
-          Based on your answers, we found <span className="font-semibold">{results.length} benefit programs</span> you may qualify for.
+    <div className="max-w-6xl mx-auto">
+      {/* Header */}
+      <header className="mb-10">
+        <h1 className="text-3xl font-medium text-gray-900 tracking-tight mb-2">
+          Your Results
+        </h1>
+        <p className="text-gray-500">
+          We found {results.length} programs you may qualify for based on your responses.
         </p>
+      </header>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          <div>
-            <p className="text-body-sm text-neutral-600 mb-1">Likely Eligible</p>
-            <p className="text-heading-md font-bold text-success">
-              {results.filter(r => r.isEligible).length} programs
-            </p>
-          </div>
-          <div>
-            <p className="text-body-sm text-neutral-600 mb-1">Potential Monthly Value</p>
-            <p className="text-heading-md font-bold text-primary-700">
-              {formatCurrency(totalMonthlyBenefit)}
-            </p>
-          </div>
-          <div>
-            <p className="text-body-sm text-neutral-600 mb-1">Average Processing</p>
-            <p className="text-heading-md font-bold text-secondary-700">
-              {Math.round(
-                results.reduce((sum, r) => sum + r.timelineWeeks, 0) / results.length
-              )}{' '}
-              weeks
-            </p>
-          </div>
-        </div>
-
-        {/* Export Buttons */}
-        <div className="mt-6 pt-6 border-t border-primary-100">
-          <ExportResults results={results} quizData={quizState.data} />
-        </div>
-      </div>
-
-      {/* Category Tabs */}
-      <CategoryTabs
-        selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
-        categoryCounts={categoryCounts}
-      />
-
-      {/* Results List */}
-      {filteredResults.length === 0 ? (
-        <div className="text-center py-12 bg-neutral-50 rounded-card">
-          <p className="text-body text-neutral-600">
-            No programs in this category match your profile.
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+        <div className="bg-accent-50 rounded-xl p-6">
+          <p className="text-sm text-accent-600 font-medium mb-1">Likely Eligible</p>
+          <p className="text-3xl font-semibold text-accent-900 tabular-nums">
+            {results.filter(r => r.isEligible).length}
+            <span className="text-lg font-normal text-accent-600 ml-1">programs</span>
           </p>
         </div>
-      ) : (
-        <div className="space-y-4">
-          {filteredResults.map((result) => (
-            <BenefitCard key={result.programId} result={result} quizData={quizState.data} />
-          ))}
+        <div className="bg-success-light rounded-xl p-6">
+          <p className="text-sm text-success font-medium mb-1">Estimated Value</p>
+          <p className="text-3xl font-semibold text-gray-900 tabular-nums">
+            {formatCurrency(totalMonthlyBenefit)}
+            <span className="text-lg font-normal text-gray-500 ml-1">/month</span>
+          </p>
+        </div>
+        <div className="bg-warning-light rounded-xl p-6">
+          <p className="text-sm text-warning font-medium mb-1">Avg. Processing</p>
+          <p className="text-3xl font-semibold text-gray-900 tabular-nums">
+            {Math.round(results.reduce((sum, r) => sum + r.timelineWeeks, 0) / results.length)}
+            <span className="text-lg font-normal text-gray-500 ml-1">weeks</span>
+          </p>
+        </div>
+      </div>
+
+      {/* Application Tracker Summary */}
+      {(trackerCounts.gathering_docs + trackerCounts.applied + trackerCounts.in_review + trackerCounts.approved + trackerCounts.denied) > 0 && (
+        <div className="flex flex-wrap gap-2 mb-10">
+          {(['gathering_docs', 'applied', 'in_review', 'approved', 'denied'] as const).map(status => {
+            if (trackerCounts[status] === 0) return null;
+            const c = STATUS_CONFIG[status];
+            return (
+              <span key={status} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium ${c.bg} ${c.color}`}>
+                <span className="font-semibold">{trackerCounts[status]}</span> {c.label}
+              </span>
+            );
+          })}
         </div>
       )}
 
-      {/* Need Help Section */}
-      <div className="bg-primary-50 border-2 border-primary-200 rounded-card p-6 text-center">
-        <h3 className="text-heading-sm text-neutral-900 mb-2 font-bold">
-          Need help applying?
-        </h3>
-        <p className="text-body text-neutral-700 mb-3">
-          Call <span className="font-bold text-primary-700">2-1-1</span> for free assistance with benefit applications
-        </p>
-        <p className="text-body-sm text-neutral-600">
-          United Way's 2-1-1 connects you with local caseworkers who can guide you through the application process for free.
-        </p>
+      {/* Priority Programs */}
+      {priorityPrograms.length > 0 && (
+        <section className="bg-white border border-gray-200 rounded-xl p-6 mb-10 shadow-subtle">
+          <h2 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-accent-100 text-accent-600">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </span>
+            Recommended First
+          </h2>
+          <div className="space-y-3">
+            {priorityPrograms.map((result, index) => (
+              <div
+                key={result.programId}
+                className="flex items-center gap-4 py-3 border-b border-gray-100 last:border-0 last:pb-0"
+              >
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent-600 text-white text-xs font-medium flex items-center justify-center">
+                  {index + 1}
+                </span>
+                <span className="flex-1 font-medium text-gray-900">{result.program.name}</span>
+                <span className="text-sm text-accent-600 font-medium tabular-nums">
+                  {result.probability}% match
+                </span>
+                {typeof result.estimatedMonthlyBenefit === 'number' && (
+                  <span className="text-sm text-gray-500 tabular-nums">
+                    {formatCurrency(result.estimatedMonthlyBenefit)}/mo
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Filters */}
+      <FilterBar
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        eligibilityFilter={eligibilityFilter}
+        onSelectEligibility={setEligibilityFilter}
+        categoryCounts={categoryCounts}
+        eligibilityCounts={eligibilityCounts}
+      />
+
+      {/* Results Grid */}
+      <section className="mt-6">
+        {filteredResults.length === 0 ? (
+          <div className="py-16 text-center bg-gray-50 rounded-xl">
+            <p className="text-gray-500">No programs match these filters.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {filteredResults.map((result) => (
+              <BenefitCard.Root key={result.programId} result={result} quizData={quizState.data}>
+                <BenefitCard.Header />
+                <BenefitCard.Meter />
+                <BenefitCard.KeyInfo />
+                <BenefitCard.Spacer />
+                <BenefitCard.ExpandableDetails />
+              </BenefitCard.Root>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Export */}
+      <div className="mt-12 pt-8 border-t border-gray-200">
+        <ExportResults results={results} quizData={quizState.data} />
       </div>
 
-      {/* Footer Note */}
-      <div className="bg-neutral-50 border border-neutral-200 rounded-card p-6">
-        <p className="text-body-sm text-neutral-700">
-          <span className="font-semibold">Important:</span> These results are preliminary estimates based on the information you provided. Actual eligibility and benefit amounts will be determined by the administering agencies. We recommend contacting each program directly to confirm your eligibility and begin the application process.
-        </p>
-      </div>
+      {/* Help Footer */}
+      <footer className="mt-12 bg-accent-50 rounded-xl p-6">
+        <div className="flex items-start gap-4">
+          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-accent-100 flex items-center justify-center">
+            <svg className="w-5 h-5 text-accent-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+          </div>
+          <div>
+            <h3 className="font-semibold text-gray-900 mb-1">Need help applying?</h3>
+            <p className="text-gray-600 text-sm mb-2">
+              Call <span className="font-semibold text-accent-700">2-1-1</span> for free assistance with your applications.
+            </p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Disclaimer */}
+      <p className="mt-8 text-xs text-gray-400 leading-relaxed">
+        These results are preliminary estimates based on the information you provided.
+        Final eligibility will be determined by the administering agencies upon application review.
+      </p>
     </div>
   );
 }

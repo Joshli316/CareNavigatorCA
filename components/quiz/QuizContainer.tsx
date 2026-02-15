@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuiz } from '@/lib/context/QuizContext';
 import { useResults } from '@/lib/context/ResultsContext';
 import { EligibilityEngine } from '@/lib/rules/eligibilityEngine';
 import { getProgramsByState } from '@/lib/rules/benefitRules';
+import { trackEvent } from '@/lib/utils/analytics';
 import { StepIndicator } from './StepIndicator';
 import { QuizNavigation } from './QuizNavigation';
 import { GeographyStep } from './steps/GeographyStep';
@@ -22,6 +23,22 @@ export function QuizContainer() {
   const { state, updateStepData, markStepComplete, goToStep } = useQuiz();
   const { setResults } = useResults();
   const [isStepValid, setIsStepValid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const stepHeadingRef = useRef<HTMLDivElement>(null);
+
+  // Track quiz start on mount
+  useEffect(() => {
+    trackEvent('quiz_start');
+  }, []);
+
+  // Focus step heading on step change
+  useEffect(() => {
+    trackEvent('quiz_step', { step: state.currentStep });
+    if (stepHeadingRef.current) {
+      stepHeadingRef.current.focus();
+    }
+  }, [state.currentStep]);
 
   const handleNext = () => {
     markStepComplete(state.currentStep);
@@ -37,18 +54,23 @@ export function QuizContainer() {
   };
 
   const handleSubmit = () => {
-    // Get state-specific programs
-    const programs = getProgramsByState(state.data.geography.state);
+    try {
+      setSubmitError(null);
+      setIsSubmitting(true);
 
-    // Run eligibility engine
-    const engine = new EligibilityEngine(programs);
-    const results = engine.evaluateEligibility(state.data);
+      const programs = getProgramsByState(state.data.geography.state);
+      const engine = new EligibilityEngine(programs);
+      const results = engine.evaluateEligibility(state.data);
 
-    // Store results
-    setResults(results);
-
-    // Navigate to results page
-    router.push('/results');
+      setResults(results);
+      trackEvent('quiz_complete');
+      router.push('/results');
+    } catch (err) {
+      setSubmitError('Something went wrong calculating your results. Please try again.');
+      console.error('Eligibility engine error:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderStep = () => {
@@ -101,7 +123,15 @@ export function QuizContainer() {
       />
 
       <Card className="p-8">
-        {renderStep()}
+        <div ref={stepHeadingRef} tabIndex={-1} className="outline-none">
+          {renderStep()}
+        </div>
+
+        {submitError && (
+          <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700" role="alert">
+            {submitError}
+          </div>
+        )}
 
         <QuizNavigation
           currentStep={state.currentStep}
@@ -112,6 +142,7 @@ export function QuizContainer() {
           canGoBack={state.currentStep > 1}
           canGoForward={isStepValid}
           isLastStep={state.currentStep === TOTAL_STEPS}
+          isSubmitting={isSubmitting}
         />
       </Card>
     </div>

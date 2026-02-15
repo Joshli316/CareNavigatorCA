@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/lib/utils/cn';
 
 export interface CardProps {
   children: React.ReactNode;
@@ -9,11 +10,11 @@ export interface CardProps {
 export function Card({ children, className = '', hoverable = false }: CardProps) {
   return (
     <div
-      className={`
-        bg-white rounded-card shadow-sm border border-neutral-200 p-6
-        ${hoverable ? 'hover:shadow-md transition-shadow cursor-pointer' : ''}
-        ${className}
-      `}
+      className={cn(
+        'bg-white rounded-lg border border-gray-200 shadow-subtle',
+        hoverable && 'transition-all duration-200 hover:shadow-card hover:border-gray-300',
+        className
+      )}
     >
       {children}
     </div>

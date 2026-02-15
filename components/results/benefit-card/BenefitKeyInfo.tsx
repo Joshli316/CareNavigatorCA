@@ -1,5 +1,4 @@
 import { formatCurrency, formatTimeline } from '@/lib/utils/format';
-import { DollarSign, Clock } from 'lucide-react';
 
 interface BenefitKeyInfoProps {
   estimatedMonthlyBenefit: number | string;
@@ -8,25 +7,18 @@ interface BenefitKeyInfoProps {
 
 export function BenefitKeyInfo({ estimatedMonthlyBenefit, timelineWeeks }: BenefitKeyInfoProps) {
   return (
-    <div className="grid grid-cols-2 gap-4 pt-4 border-t border-neutral-200">
-      <div className="flex items-start space-x-3">
-        <DollarSign className="w-5 h-5 text-neutral-500 mt-0.5" />
-        <div>
-          <p className="text-body-sm text-neutral-600">Estimated Value</p>
-          <p className="text-body font-semibold text-neutral-900">
-            {formatCurrency(estimatedMonthlyBenefit)}/mo
-          </p>
-        </div>
+    <div className="px-5 py-4 border-t border-gray-100 grid grid-cols-2 gap-4">
+      <div>
+        <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Value</p>
+        <p className="text-sm text-gray-900 tabular-nums">
+          {formatCurrency(estimatedMonthlyBenefit)}
+          <span className="text-gray-400">/mo</span>
+        </p>
       </div>
 
-      <div className="flex items-start space-x-3">
-        <Clock className="w-5 h-5 text-neutral-500 mt-0.5" />
-        <div>
-          <p className="text-body-sm text-neutral-600">Processing Time</p>
-          <p className="text-body font-semibold text-neutral-900">
-            {formatTimeline(timelineWeeks)}
-          </p>
-        </div>
+      <div>
+        <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Timeline</p>
+        <p className="text-sm text-gray-900">{formatTimeline(timelineWeeks)}</p>
       </div>
     </div>
   );

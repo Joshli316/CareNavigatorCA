@@ -73,3 +73,12 @@ export function formatDocumentType(type: string): string {
 export function formatPercentage(value: number): string {
   return `${Math.round(value)}%`;
 }
+
+/**
+ * Parse a currency string (e.g. "$1,500") into a number
+ */
+export function parseCurrency(value: string): number {
+  const cleaned = String(value).replace(/[$,\s]/g, '');
+  const num = parseFloat(cleaned);
+  return isNaN(num) || num < 0 ? 0 : num;
+}

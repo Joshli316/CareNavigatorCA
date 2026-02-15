@@ -2,31 +2,106 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --color-primary: #0D9488;
-  --color-secondary: #3B82F6;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --border: 0 0% 90%;
+    --ring: 0 0% 9%;
+  }
 }
 
 body {
-  @apply text-neutral-900 bg-neutral-50;
+  color: hsl(0 0% 9%);
+  background-color: hsl(0 0% 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  letter-spacing: -0.011em;
 }
 
-* {
-  @apply antialiased;
+/* Premium typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+}
+
+/* Subtle selection */
+::selection {
+  background-color: hsl(0 0% 9% / 0.08);
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid hsl(0 0% 9%);
+  outline-offset: 2px;
 }
 
 /* Print styles */
 @media print {
   body {
-    @apply bg-white;
+    background: white;
+    font-size: 12pt;
   }
 
   .print\:hidden {
     display: none !important;
   }
 
-  header {
+  header, nav {
     display: none !important;
+  }
+
+  /* Hide filter bar and export buttons */
+  [class*="FilterBar"],
+  [class*="ExportResults"],
+  button {
+    display: none !important;
+  }
+
+  /* Prevent page breaks inside cards */
+  [class*="BenefitCard"],
+  [class*="rounded-xl"] {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Expand collapsed sections */
+  details {
+    open: true;
+  }
+  details > summary {
+    display: none;
+  }
+  details > *:not(summary) {
+    display: block !important;
+  }
+
+  /* Show full benefit details */
+  [data-expanded="false"] {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Page header */
+  main::before {
+    content: "CareNavigator Results";
+    display: block;
+    font-size: 18pt;
+    font-weight: 600;
+    margin-bottom: 8pt;
+  }
+
+  main::after {
+    content: "Generated on " attr(data-date);
+    display: block;
+    font-size: 9pt;
+    color: #666;
+    margin-bottom: 16pt;
   }
 
   @page {

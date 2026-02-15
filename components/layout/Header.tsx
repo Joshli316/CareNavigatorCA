@@ -1,27 +1,26 @@
 import Link from 'next/link';
-import { HeartHandshake } from 'lucide-react';
 
 export function Header() {
   return (
-    <header className="bg-white border-b border-neutral-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 hover:opacity-80 transition-opacity">
-            <HeartHandshake className="w-6 h-6 sm:w-8 sm:h-8 text-primary-500" />
-            <span className="text-body-lg sm:text-heading-sm text-neutral-900">
-              CareNavigator
-            </span>
+    <header className="bg-white border-b border-gray-100">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="flex items-center justify-between h-14">
+          <Link href="/" className="text-sm font-medium text-gray-900 tracking-tight hover:text-gray-600 transition-colors">
+            CareNavigator
           </Link>
 
-          <nav className="flex items-center space-x-3 sm:space-x-6">
-            <Link href="/quiz" className="text-body-sm sm:text-body text-neutral-700 hover:text-primary-500 transition-colors">
-              Quiz
+          <nav aria-label="Main navigation" className="flex items-center gap-8">
+            <Link href="/quiz" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
+              Assessment
             </Link>
-            <Link href="/results" className="text-body-sm sm:text-body text-neutral-700 hover:text-primary-500 transition-colors">
+            <Link href="/grants" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
+              Grants
+            </Link>
+            <Link href="/results" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
               Results
             </Link>
-            <Link href="/vault" className="hidden sm:inline text-body text-neutral-700 hover:text-primary-500 transition-colors">
-              Vault
+            <Link href="/demo" className="text-sm font-medium text-accent-600 hover:text-accent-700 transition-colors">
+              Demo
             </Link>
           </nav>
         </div>

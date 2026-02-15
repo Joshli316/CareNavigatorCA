@@ -46,7 +46,10 @@ export function DemographicStep({ data, onChange, onValidate }: DemographicStepP
         label="Your age"
         type="number"
         value={formData.age || ''}
-        onChange={(e) => handleChange('age', parseInt(e.target.value) || 0)}
+        onChange={(e) => {
+          const val = parseInt(e.target.value, 10) || 0;
+          handleChange('age', Math.min(Math.max(val, 0), 120));
+        }}
         min={0}
         max={120}
         placeholder="0"
@@ -56,8 +59,12 @@ export function DemographicStep({ data, onChange, onValidate }: DemographicStepP
         label="Household size (including yourself)"
         type="number"
         value={formData.householdSize || ''}
-        onChange={(e) => handleChange('householdSize', parseInt(e.target.value) || 1)}
+        onChange={(e) => {
+          const val = parseInt(e.target.value, 10) || 1;
+          handleChange('householdSize', Math.min(Math.max(val, 1), 20));
+        }}
         min={1}
+        max={20}
         placeholder="1"
         helperText="Include everyone who lives with you and shares expenses"
       />
@@ -77,7 +84,7 @@ export function DemographicStep({ data, onChange, onValidate }: DemographicStepP
             onChange={(e) => {
               const ages = e.target.value
                 .split(',')
-                .map((a) => parseInt(a.trim()))
+                .map((a) => parseInt(a.trim(), 10))
                 .filter((a) => !isNaN(a));
               handleChange('childrenAges', 0);
               const newData = { ...formData, childrenAges: ages };

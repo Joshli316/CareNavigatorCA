@@ -69,7 +69,11 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
       };
       // Persist to localStorage
       if (typeof window !== 'undefined') {
-        localStorage.setItem('careNavigator_quizData', JSON.stringify(newData));
+        try {
+          localStorage.setItem('careNavigator_quizData', JSON.stringify(newData));
+        } catch (e) {
+          console.warn('Failed to save quiz data:', e);
+        }
       }
       return { ...state, data: newData };
 
@@ -85,7 +89,11 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
 
     case 'RESET':
       if (typeof window !== 'undefined') {
-        localStorage.removeItem('careNavigator_quizData');
+        try {
+          localStorage.removeItem('careNavigator_quizData');
+        } catch (e) {
+          console.warn('Failed to clear quiz data:', e);
+        }
       }
       return initialState;
 
@@ -112,17 +120,18 @@ export function QuizProvider({ children }: { children: ReactNode }) {
 
   // Load from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('careNavigator_quizData');
-    if (saved) {
-      try {
+    if (typeof window === 'undefined') return;
+    try {
+      const saved = localStorage.getItem('careNavigator_quizData');
+      if (saved) {
         const data = JSON.parse(saved);
         dispatch({ type: 'UPDATE_DATA', payload: { step: 'geography', data: data.geography } });
         dispatch({ type: 'UPDATE_DATA', payload: { step: 'disability', data: data.disability } });
         dispatch({ type: 'UPDATE_DATA', payload: { step: 'financial', data: data.financial } });
         dispatch({ type: 'UPDATE_DATA', payload: { step: 'demographic', data: data.demographic } });
-      } catch (error) {
-        console.error('Error loading quiz data:', error);
       }
+    } catch (error) {
+      console.error('Error loading quiz data:', error);
     }
   }, []);
 

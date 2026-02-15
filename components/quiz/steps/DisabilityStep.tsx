@@ -20,6 +20,13 @@ export function DisabilityStep({ data, onChange, onValidate }: DisabilityStepPro
 
   const handleCheckbox = (field: keyof DisabilityData, checked: boolean) => {
     const newData = { ...formData, [field]: checked };
+    // If disability is unchecked, clear SSI/SSDI (logic contradiction)
+    if (field === 'hasDisability' && !checked) {
+      newData.receivingSSI = false;
+      newData.receivingSSDI = false;
+      newData.hasSSADetermination = false;
+      newData.disabilityType = [];
+    }
     setFormData(newData);
     onChange(newData);
   };

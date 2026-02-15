@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Input } from '@/components/shared/Input';
 import { Checkbox } from '@/components/shared/Checkbox';
 import { FinancialData, IncomeType } from '@/types/quiz';
+import { parseCurrency } from '@/lib/utils/format';
 
 interface FinancialStepProps {
   data: FinancialData;
@@ -46,11 +47,10 @@ export function FinancialStep({ data, onChange, onValidate }: FinancialStepProps
 
       <Input
         label="Monthly household income (gross, before taxes)"
-        type="number"
+        type="text"
+        inputMode="decimal"
         value={formData.monthlyIncome || ''}
-        onChange={(e) => handleChange('monthlyIncome', parseFloat(e.target.value) || 0)}
-        min={0}
-        step={0.01}
+        onChange={(e) => handleChange('monthlyIncome', parseCurrency(e.target.value))}
         placeholder="0.00"
         helperText="Include all sources of income for everyone in your household"
       />
@@ -88,11 +88,10 @@ export function FinancialStep({ data, onChange, onValidate }: FinancialStepProps
 
       <Input
         label="Countable assets (savings, checking accounts, stocks)"
-        type="number"
+        type="text"
+        inputMode="decimal"
         value={formData.countableAssets || ''}
-        onChange={(e) => handleChange('countableAssets', parseFloat(e.target.value) || 0)}
-        min={0}
-        step={0.01}
+        onChange={(e) => handleChange('countableAssets', parseCurrency(e.target.value))}
         placeholder="0.00"
         helperText="Do not include your primary home or one vehicle"
       />
@@ -112,11 +111,10 @@ export function FinancialStep({ data, onChange, onValidate }: FinancialStepProps
           <div className="ml-8">
             <Input
               label="Estimated car value"
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={formData.carValue || ''}
-              onChange={(e) => handleChange('carValue', parseFloat(e.target.value) || 0)}
-              min={0}
-              step={100}
+              onChange={(e) => handleChange('carValue', parseCurrency(e.target.value))}
               placeholder="0.00"
             />
           </div>
@@ -132,11 +130,10 @@ export function FinancialStep({ data, onChange, onValidate }: FinancialStepProps
           <div className="ml-8">
             <Input
               label="Estimated home value"
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={formData.homeValue || ''}
-              onChange={(e) => handleChange('homeValue', parseFloat(e.target.value) || 0)}
-              min={0}
-              step={1000}
+              onChange={(e) => handleChange('homeValue', parseCurrency(e.target.value))}
               placeholder="0.00"
               helperText="Primary homes are often exempt from asset limits"
             />

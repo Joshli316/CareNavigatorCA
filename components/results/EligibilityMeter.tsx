@@ -1,31 +1,30 @@
-import { getEligibilityStatus } from '@/lib/utils/styles';
-
 interface EligibilityMeterProps {
   probability: number;
 }
 
 export function EligibilityMeter({ probability }: EligibilityMeterProps) {
-  const status = getEligibilityStatus(probability);
-
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <span className="text-body-sm font-medium text-neutral-700">Eligibility</span>
-        <span className={`text-heading-md font-bold ${status.color}`}>
+        <span className="text-xs text-gray-400 uppercase tracking-wide">Match</span>
+        <span className="text-sm font-medium text-gray-900 tabular-nums">
           {probability}%
         </span>
       </div>
 
-      <div className="w-full h-3 bg-neutral-200 rounded-full overflow-hidden">
+      <div
+        role="progressbar"
+        aria-valuenow={probability}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="Eligibility match"
+        className="w-full h-0.5 bg-gray-100 overflow-hidden"
+      >
         <div
-          className={`h-full ${status.backgroundColor} transition-all duration-500 ease-out`}
+          className="h-full bg-gray-900 transition-all duration-500 ease-out motion-reduce:transition-none"
           style={{ width: `${probability}%` }}
         />
       </div>
-
-      <p className={`text-body-sm font-medium ${status.color}`}>
-        {status.label}
-      </p>
     </div>
   );
 }

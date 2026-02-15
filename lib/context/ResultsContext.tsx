@@ -1,13 +1,17 @@
 'use client';
 
-import React, { createContext, useContext, useState, useMemo, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useMemo, ReactNode } from 'react';
 import { EligibilityResult, BenefitCategory } from '@/types/benefit';
+
+export type EligibilityFilter = 'all' | 'likely' | 'possible' | 'unlikely';
 
 interface ResultsContextValue {
   results: EligibilityResult[];
   setResults: (results: EligibilityResult[]) => void;
   selectedCategory: BenefitCategory | 'all';
   setSelectedCategory: (category: BenefitCategory | 'all') => void;
+  eligibilityFilter: EligibilityFilter;
+  setEligibilityFilter: (filter: EligibilityFilter) => void;
   filteredResults: EligibilityResult[];
 }
 
@@ -28,6 +32,7 @@ export function ResultsProvider({ children }: { children: ReactNode }) {
   });
 
   const [selectedCategory, setSelectedCategory] = useState<BenefitCategory | 'all'>('all');
+  const [eligibilityFilter, setEligibilityFilter] = useState<EligibilityFilter>('all');
 
   // Save to localStorage whenever results change
   const setResults = (newResults: EligibilityResult[]) => {
@@ -41,10 +46,17 @@ export function ResultsProvider({ children }: { children: ReactNode }) {
 
   // Memoize filteredResults to prevent unnecessary recalculations
   const filteredResults = useMemo(() => {
-    return selectedCategory === 'all'
-      ? results
-      : results.filter(r => r.program.category === selectedCategory);
-  }, [results, selectedCategory]);
+    return results.filter(r => {
+      // Category filter
+      const categoryMatch = selectedCategory === 'all' || r.program.category === selectedCategory;
+      // Eligibility filter
+      const eligibilityMatch = eligibilityFilter === 'all' ||
+        (eligibilityFilter === 'likely' && r.probability >= 70) ||
+        (eligibilityFilter === 'possible' && r.probability >= 40 && r.probability < 70) ||
+        (eligibilityFilter === 'unlikely' && r.probability < 40);
+      return categoryMatch && eligibilityMatch;
+    });
+  }, [results, selectedCategory, eligibilityFilter]);
 
   return (
     <ResultsContext.Provider
@@ -53,6 +65,8 @@ export function ResultsProvider({ children }: { children: ReactNode }) {
         setResults,
         selectedCategory,
         setSelectedCategory,
+        eligibilityFilter,
+        setEligibilityFilter,
         filteredResults,
       }}
     >

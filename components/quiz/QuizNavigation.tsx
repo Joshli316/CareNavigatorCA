@@ -1,5 +1,5 @@
 import { Button } from '@/components/shared/Button';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 
 interface QuizNavigationProps {
   currentStep: number;
@@ -10,6 +10,7 @@ interface QuizNavigationProps {
   canGoBack: boolean;
   canGoForward: boolean;
   isLastStep: boolean;
+  isSubmitting?: boolean;
 }
 
 export function QuizNavigation({
@@ -21,6 +22,7 @@ export function QuizNavigation({
   canGoBack,
   canGoForward,
   isLastStep,
+  isSubmitting = false,
 }: QuizNavigationProps) {
   return (
     <div className="flex items-center justify-between mt-8 pt-6 border-t border-neutral-200">
@@ -29,6 +31,7 @@ export function QuizNavigation({
           <Button
             variant="ghost"
             onClick={onBack}
+            disabled={isSubmitting}
             className="inline-flex items-center space-x-2"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -37,7 +40,7 @@ export function QuizNavigation({
         )}
       </div>
 
-      <div className="text-body-sm text-neutral-600">
+      <div className="text-body-sm text-neutral-600" aria-live="polite">
         Step {currentStep} of {totalSteps}
       </div>
 
@@ -45,11 +48,20 @@ export function QuizNavigation({
         {isLastStep ? (
           <Button
             onClick={onSubmit}
-            disabled={!canGoForward}
+            disabled={!canGoForward || isSubmitting}
             className="inline-flex items-center space-x-2"
           >
-            <span>See My Results</span>
-            <ArrowRight className="w-4 h-4" />
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Calculating...</span>
+              </>
+            ) : (
+              <>
+                <span>See My Results</span>
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )}
           </Button>
         ) : (
           <Button

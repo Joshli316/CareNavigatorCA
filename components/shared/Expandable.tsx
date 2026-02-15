@@ -1,7 +1,6 @@
 'use client';
 
 import { ReactNode, useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface ExpandableProps {
   children: ReactNode;
@@ -11,10 +10,6 @@ interface ExpandableProps {
   collapseText?: string;
 }
 
-/**
- * Reusable expand/collapse component
- * Consolidates duplicate toggle logic from BenefitCard and PrefillButton
- */
 export function Expandable({
   children,
   trigger,
@@ -26,24 +21,24 @@ export function Expandable({
 
   return (
     <div>
-      {/* Custom trigger or default button */}
       {trigger ? (
         <div onClick={() => setIsExpanded(!isExpanded)}>{trigger}</div>
       ) : (
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full flex items-center justify-center space-x-2 py-2 text-body text-primary-500 hover:text-primary-600 transition-colors"
+          className="w-full flex items-center justify-center gap-2 py-3 text-xs tracking-wide text-gray-500 hover:text-gray-700 transition-colors uppercase"
         >
           <span>{isExpanded ? collapseText : expandText}</span>
-          {isExpanded ? (
-            <ChevronUp className="w-4 h-4" />
-          ) : (
-            <ChevronDown className="w-4 h-4" />
-          )}
+          <svg
+            className={`w-3 h-3 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
         </button>
       )}
-
-      {/* Expandable content */}
       {isExpanded && children}
     </div>
   );

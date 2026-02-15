@@ -13,7 +13,7 @@ export function StepIndicator({ currentStep, totalSteps, completedSteps }: StepI
     <div className="w-full mb-8">
       {/* Progress Percentage */}
       <div className="flex items-center justify-between mb-4">
-        <span className="text-body-sm text-neutral-600">
+        <span className="text-body-sm text-neutral-600" aria-live="polite">
           Step {currentStep} of {totalSteps}
         </span>
         <span className="text-body-sm font-semibold text-primary-600">

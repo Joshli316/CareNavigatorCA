@@ -2,9 +2,11 @@
 
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/shared/Button';
-import { Download, Printer, Share2, RefreshCw } from 'lucide-react';
+import { Download, Printer, Share2, RefreshCw, FileText } from 'lucide-react';
 import { EligibilityResult } from '@/types/benefit';
 import { QuizData } from '@/types/quiz';
+import { trackEvent } from '@/lib/utils/analytics';
+import { openBenefitsLetter } from '@/lib/utils/benefits-letter';
 
 interface ExportResultsProps {
   results: EligibilityResult[];
@@ -20,11 +22,18 @@ export function ExportResults({ results, quizData }: ExportResultsProps) {
     router.push('/quiz');
   };
 
+  const handleBenefitsLetter = () => {
+    trackEvent('results_export', { type: 'letter' });
+    openBenefitsLetter(results, quizData);
+  };
+
   const handlePrint = () => {
+    trackEvent('results_export', { type: 'print' });
     window.print();
   };
 
   const handleDownloadJSON = () => {
+    trackEvent('results_export', { type: 'json' });
     const exportData = {
       generatedAt: new Date().toISOString(),
       quizData,
@@ -58,6 +67,7 @@ export function ExportResults({ results, quizData }: ExportResultsProps) {
   };
 
   const handleShare = async () => {
+    trackEvent('results_export', { type: 'share' });
     const shareText = `I found ${results.filter(r => r.isEligible).length} benefits I may be eligible for using CareNavigator! Check out https://care-navigator.pages.dev`;
 
     if (navigator.share) {
@@ -80,6 +90,16 @@ export function ExportResults({ results, quizData }: ExportResultsProps) {
 
   return (
     <div className="flex flex-wrap gap-3 print:hidden">
+      <Button
+        onClick={handleBenefitsLetter}
+        variant="outline"
+        size="sm"
+        className="inline-flex items-center space-x-2"
+      >
+        <FileText className="w-4 h-4" />
+        <span>Benefits Letter</span>
+      </Button>
+
       <Button
         onClick={handleRetakeQuiz}
         variant="outline"
