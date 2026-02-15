@@ -9,9 +9,9 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 ### Key Features
 
 - **Smart Eligibility Quiz**: 5-step guided form collecting location, disability, financial, and household information
-- **Intelligent Matching**: Evaluates **34+ benefit programs** with probability scoring (0-100%)
-- **Geographic Focus**: Dallas-Fort Worth (DFW) metropolitan area, Texas
-- **Comprehensive Coverage**: Federal, Texas state, local DFW, nonprofit organizations, and Christian church special needs ministries
+- **Intelligent Matching**: Evaluates **100+ benefit programs** with probability scoring (0-100%)
+- **Geographic Focus**: Texas statewide with Dallas-Fort Worth (DFW) local programs
+- **Comprehensive Coverage**: Federal, Texas state (25+ programs), local DFW, nonprofit organizations, and Christian church special needs ministries
 - **Persistent Data**: Auto-saves quiz progress to browser localStorage
 - **Accessible Design**: WCAG 2.1 AA compliant with touch-friendly UI
 
@@ -44,8 +44,9 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 │   ├── rules/              # Benefit rules & eligibility engine
 │   │   ├── programs/           # Organized by category
 │   │   │   ├── federal.ts      # 12 federal programs
-│   │   │   ├── housing.ts      # 4 housing programs
-│   │   │   ├── nonprofits.ts   # 13 nonprofit programs
+│   │   │   ├── texas.ts        # 25 Texas state programs (NEW)
+│   │   │   ├── housing.ts      # 7 housing programs
+│   │   │   ├── nonprofits.ts   # 33 nonprofit programs
 │   │   │   └── churches.ts     # 7 church ministries
 │   │   ├── eligibilityEngine.ts # Core matching logic
 │   │   └── constants/          # 2026 federal/state limits
@@ -60,7 +61,7 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 
 ```
 
-## 💡 Benefits Included (34+ Programs)
+## 💡 Benefits Included (100+ Programs)
 
 ### Federal Programs (12)
 - **SSI** (Supplemental Security Income) - $943/mo
@@ -76,11 +77,48 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 - **Affordable Connectivity Program** (ACP) - $30/mo internet
 - **Texas STAR+PLUS Waiver** - Home & community-based services
 
-### Housing Programs (4)
+### Texas State Programs (25 NEW!)
+**Healthcare & Waivers:**
+- **Texas CHIP** - Children's health insurance (up to 200% FPL)
+- **Texas HCS Waiver** - Home & community-based services for IDD
+- **Texas CLASS Waiver** - Community living for related conditions (cerebral palsy, etc.)
+- **Texas DBMD Waiver** - Deaf-blind with multiple disabilities services
+- **Texas MDCP** - Medically dependent children program (ages 0-20)
+- **Texas Home Living (TxHmL)** - Day habilitation, respite, employment support
+- **Texas Children's Autism Program** - Free ABA therapy (ages 3-15, 180 hrs/year)
+- **Texas Community Attendant Services** - In-home personal care
+- **Texas Primary Home Care** - Home supervision for elderly/disabled
+- **Texas PACE** - All-inclusive care for elderly (55+)
+- **Texas Blind Services** - Training, adaptive tech for blind/visually impaired
+- **Texas Medicaid Buy-In** - Coverage for working adults with disabilities
+
+**Disability Services:**
+- **Texas Vocational Rehabilitation** - Free job training, career counseling
+- **Texas ABLE Account** - Tax-free disability savings ($19,000/year)
+- **Texas 2-1-1** - 24/7 helpline for all assistance programs
+
+**Veterans Programs:**
+- **Texas Veterans Property Tax Exemption** - Full exemption at 100% disability
+- **Texas Hazlewood Act** - Free college tuition (150 credit hours)
+- **Texas Veterans Free Driver License** - Free DL at 60%+ disability
+- **Texas Parklands Passport** - Free state park entry
+- **Texas Veterans Mental Health** - Free counseling, peer support
+- **Texas Fund for Veterans' Assistance** - Emergency financial aid
+
+**Housing & Utilities:**
+- **Texas TBRA** - Rental assistance up to 5 years (no limit for PWD)
+- **Texas Project Access** - Section 8 for institution-to-community transitions
+- **Texas CEAP** - Utility bill assistance (up to 150% FPL)
+- **Texas Weatherization** - Free home energy improvements
+
+### Housing Programs (7)
 - **Section 8 Housing Choice Voucher** - 30% of income toward rent
 - **Local Housing Assistance Grant** - ~$500/mo
 - **Dallas Housing Authority** - Affordable housing
 - **Dallas County Emergency Rental Assistance** - Rental/utility assistance
+- **Texas TBRA** - Tenant-Based Rental Assistance
+- **Texas Project Access** - Transition housing vouchers
+- **Texas Veterans Property Tax Exemption** - Full exemption for 100% disabled vets
 
 ### DFW Nonprofit Organizations (13)
 - **Disability Emergency Assistance Fund** - One-time emergency grants
@@ -97,7 +135,54 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 - **HealthWell Foundation** - Prescriptions, insurance premiums (~$600)
 - **Parkland Health** - Sliding scale medical care
 
-### Christian Church Special Needs Ministries (7)
+### DFW Adaptive Sports Programs (7 NEW!)
+- **DFW Adaptive Sports Coalition** - Wheelchair basketball, sled hockey, blind fencing, 10+ sports
+- **RISE Adaptive Sports** - FREE rugby, volleyball, swimming, handcycling
+- **Dallas Jr. Wheelchair Mavericks** - Youth wheelchair basketball (ages 5-18)
+- **Miracle League DFW** - Baseball, basketball, soccer for special needs
+- **YMCA Champions League** - FREE monthly multi-sport league
+- **Arise Special Needs Sports** - Year-round adaptive sports
+- **Dallas Adapted Aquatics** - Swimming lessons for persons with disabilities
+
+### DFW Foster Care & Orphan Support (7 NEW!)
+- **Hope Cottage** - 106-year nonprofit for adoption & foster care
+- **Buckner International** - Foster care, adoption, Buckner NextStep
+- **CASA of Dallas County** - Court advocates for foster children
+- **CASA of Tarrant County** - Advocates for Fort Worth area foster children
+- **Jonathan's Place** - Emergency shelter for abused/neglected children
+- **Embrace Texas** - Church-based foster family support
+- **BraveLove** - Birth mother support and adoption advocacy
+
+### DFW Faith-Based Disability Nonprofits (6 NEW!)
+- **The Well Community** - Faith-based support for adults with mental illness
+- **Jewish Family Service of Greater Dallas** - Counseling, disability inclusion (serves all faiths)
+- **Mission Arlington** - Emergency assistance, medical, dental care
+- **Positive Reflection Ministries** - Emergency aid for disabled/elderly/low-income
+- **Good Word Ministries** - Programs for deaf and disabled individuals
+- **Faith in Texas** - Multi-faith (Christian, Jewish, Muslim) justice coalition
+
+### DFW Transportation (3 NEW!)
+- **DART Paratransit** - Curb-to-curb transport for disabilities (Dallas, Plano, Garland, Irving, Richardson)
+- **Trinity Metro ACCESS** - Fort Worth/Tarrant County paratransit
+- **My Ride Dallas** - Free Medicaid medical transport
+
+### DFW Respite Care (3 NEW!)
+- **North Central Texas AAA** - Up to $1,000 in respite vouchers for family caregivers
+- **Arise Special Needs Respite** - Overnight respite, social skills, community outings
+- **Special Birds Family Nursing** - Fort Worth respite care
+
+### DFW Legal Aid (3 NEW!)
+- **Disability Rights Texas (Dallas)** - Free disability rights legal advocacy
+- **Legal Aid of NorthWest Texas** - Free civil legal services for low-income
+- **Dallas Volunteer Attorney Program** - Free legal help in Dallas County
+
+### DFW Dental & Vision (4 NEW!)
+- **Texas Mission of Mercy** - Free dental at traveling clinics (no ID required)
+- **Mercy Clinic Friends (Fort Worth)** - Free medical, dental, pharmacy
+- **Lions Club Vision** - Free eye exams and glasses
+- **Essilor Vision Foundation** - Free glasses for children
+
+### Baptist Churches (7)
 - **Watermark Community Church (Dallas)** - Access Ministry
 - **First Baptist Dallas** - Special Needs Ministry
 - **Prestonwood Baptist Church (Plano)** - Special Friends Ministry
@@ -105,6 +190,22 @@ CareNavigator is a prototype demonstrating an intelligent benefits eligibility p
 - **Lake Pointe Church (Rockwall)** - Exceptional Ministry
 - **Village Church (Flower Mound)** - Access Ministry
 - **Joni and Friends - North Texas Chapter**
+
+### Methodist Churches (2 NEW!)
+- **Highland Park UMC** - Belong disABILITY Ministry
+- **First UMC Allen** - Special Kids Ministry (buddy system)
+
+### Catholic Churches (3 NEW!)
+- **St. Rita Parish (Fort Worth)** - Deaf & Special Needs Ministry
+- **All Saints Catholic (Fort Worth)** - ASL interpreted Mass
+- **St. Monica Catholic (Dallas)** - Interpreted children's Mass
+
+### Episcopal Churches (1 NEW!)
+- **St. Stephen's Episcopal (Hurst)** - ASL interpreted services
+
+### Lutheran & Other Churches (2 NEW!)
+- **Redeemer Lutheran (Dallas)** - Disability-inclusive worship
+- **Stonebriar Community Church (Frisco)** - GIFT Ministry
 
 ## 🚀 Quick Start
 
@@ -263,7 +364,7 @@ The prototype is fully responsive and works on:
 - [ ] Server-side eligibility evaluation
 
 ### Phase 3 (Scale)
-- [ ] 50+ benefit programs
+- [x] 50+ benefit programs ✅ (60+ now!)
 - [ ] All 50 states support
 - [ ] Admin UI for rule editing
 - [ ] Case worker portal
@@ -299,5 +400,5 @@ This prototype is for demonstration purposes only. Not intended for production u
 
 **Built with Next.js, TypeScript, and Tailwind CSS**
 
-🚀 **Status**: Prototype v1.1 - Refactored & Production-Ready
+🚀 **Status**: Prototype v1.4 - Full DFW Coverage (100+ Programs)
 🌐 **Live Demo**: https://care-navigator.pages.dev

@@ -258,3 +258,308 @@ export const JONI_AND_FRIENDS_NTX: BenefitProgram = {
   applicationUrl: 'https://www.joniandfriends.org/',
   helplinePhone: 'northtexas@joniandfriends.org',
 };
+
+// ============================================
+// METHODIST CHURCHES
+// ============================================
+
+// Highland Park United Methodist - Belong Ministry
+export const HPUMC_BELONG: BenefitProgram = {
+  id: 'hpumc-belong-2026',
+  name: 'Highland Park UMC - Belong disABILITY Ministry',
+  shortName: 'HPUMC Belong',
+  category: BenefitCategory.FAITH_BASED,
+  jurisdiction: 'county',
+  jurisdictionCode: 'Dallas',
+  description: 'Adaptive, inclusive community welcoming people of all abilities, ages, and faiths',
+  estimatedMonthlyValue: 'varies',
+  processingTimeWeeks: 0,
+  rules: [
+    {
+      type: RuleType.DISABILITY_REQUIRED,
+      field: 'disability.hasDisability',
+      operator: RuleOperator.EQUALS,
+      value: true,
+      weight: 0.8,
+      isMandatory: false,
+      failureMessage: 'Open to all abilities',
+    },
+    {
+      type: RuleType.GEOGRAPHY_MATCH,
+      field: 'geography.city',
+      operator: RuleOperator.EQUALS,
+      value: 'Dallas',
+      weight: 0.7,
+      isMandatory: false,
+      failureMessage: 'Located in Highland Park/Dallas',
+    },
+  ],
+  requiredDocuments: [],
+  applicationUrl: 'https://www.hpumc.org/impact/belong',
+  helplinePhone: '214-521-3111',
+};
+
+// First United Methodist Allen - Special Kids
+export const FUMC_ALLEN: BenefitProgram = {
+  id: 'fumc-allen-2026',
+  name: 'First UMC Allen - Special Kids Ministry',
+  shortName: 'FUMC Allen',
+  category: BenefitCategory.FAITH_BASED,
+  jurisdiction: 'county',
+  jurisdictionCode: 'Dallas',
+  description: 'Buddy system for all church programs including day camp, VBS, music camp, confirmation, youth activities',
+  estimatedMonthlyValue: 'varies',
+  processingTimeWeeks: 0,
+  rules: [
+    {
+      type: RuleType.DISABILITY_REQUIRED,
+      field: 'disability.hasDisability',
+      operator: RuleOperator.EQUALS,
+      value: true,
+      weight: 0.8,
+      isMandatory: false,
+      failureMessage: 'Buddies provided for all programming',
+    },
+    {
+      type: RuleType.GEOGRAPHY_MATCH,
+      field: 'geography.city',
+      operator: RuleOperator.INCLUDES,
+      value: ['Plano', 'Other DFW'],
+      weight: 0.7,
+      isMandatory: false,
+      failureMessage: 'Located in Allen (Collin County)',
+    },
+  ],
+  requiredDocuments: [],
+  applicationUrl: 'https://www.fumcallen.org/',
+  helplinePhone: '972-727-8261',
+};
+
+// ============================================
+// CATHOLIC CHURCHES
+// ============================================
+
+// St. Rita Parish Fort Worth - Deaf Ministry
+export const ST_RITA_FW: BenefitProgram = {
+  id: 'st-rita-fw-2026',
+  name: 'St. Rita Parish - Deaf & Special Needs Ministry',
+  shortName: 'St. Rita FW',
+  category: BenefitCategory.FAITH_BASED,
+  jurisdiction: 'county',
+  jurisdictionCode: 'Tarrant',
+  description: 'Deaf Community Mass (1st Sunday monthly), special needs support through Diocese of Fort Worth',
+  estimatedMonthlyValue: 'varies',
+  processingTimeWeeks: 0,
+  rules: [
+    {
+      type: RuleType.DISABILITY_REQUIRED,
+      field: 'disability.hasDisability',
+      operator: RuleOperator.EQUALS,
+      value: true,
+      weight: 0.8,
+      isMandatory: false,
+      failureMessage: 'Deaf ministry and special needs services',
+    },
+    {
+      type: RuleType.GEOGRAPHY_MATCH,
+      field: 'geography.city',
+      operator: RuleOperator.INCLUDES,
+      value: ['Fort Worth', 'Other DFW'],
+      weight: 0.7,
+      isMandatory: false,
+      failureMessage: 'Located in Fort Worth',
+    },
+  ],
+  requiredDocuments: [],
+  applicationUrl: 'https://www.stritafw.org/',
+  helplinePhone: '817-451-9395',
+};
+
+// All Saints Catholic Fort Worth - Interpreted Mass
+export const ALL_SAINTS_FW: BenefitProgram = {
+  id: 'all-saints-fw-2026',
+  name: 'All Saints Catholic Church - Interpreted Mass',
+  shortName: 'All Saints FW',
+  category: BenefitCategory.FAITH_BASED,
+  jurisdiction: 'county',
+  jurisdictionCode: 'Tarrant',
+  description: 'ASL interpreted Mass every Sunday at 9:00 AM',
+  estimatedMonthlyValue: 'varies',
+  processingTimeWeeks: 0,
+  rules: [
+    {
+      type: RuleType.DISABILITY_REQUIRED,
+      field: 'disability.hasDisability',
+      operator: RuleOperator.EQUALS,
+      value: true,
+      weight: 0.8,
+      isMandatory: false,
+      failureMessage: 'ASL interpretation available',
+    },
+    {
+      type: RuleType.GEOGRAPHY_MATCH,
+      field: 'geography.city',
+      operator: RuleOperator.INCLUDES,
+      value: ['Fort Worth', 'Other DFW'],
+      weight: 0.7,
+      isMandatory: false,
+      failureMessage: 'Located in Fort Worth',
+    },
+  ],
+  requiredDocuments: [],
+  applicationUrl: 'https://www.allsaintsfw.org/',
+  helplinePhone: '817-732-2766',
+};
+
+// St. Monica Dallas - Interpreted Children's Mass
+export const ST_MONICA_DALLAS: BenefitProgram = {
+  id: 'st-monica-dallas-2026',
+  name: 'St. Monica Catholic Church - Interpreted Mass',
+  shortName: 'St. Monica Dallas',
+  category: BenefitCategory.FAITH_BASED,
+  jurisdiction: 'county',
+  jurisdictionCode: 'Dallas',
+  description: 'ASL interpreted children\'s Mass on Sundays at 9:30 AM',
+  estimatedMonthlyValue: 'varies',
+  processingTimeWeeks: 0,
+  rules: [
+    {
+      type: RuleType.DISABILITY_REQUIRED,
+      field: 'disability.hasDisability',
+      operator: RuleOperator.EQUALS,
+      value: true,
+      weight: 0.8,
+      isMandatory: false,
+      failureMessage: 'ASL interpretation for children',
+    },
+    {
+      type: RuleType.GEOGRAPHY_MATCH,
+      field: 'geography.city',
+      operator: RuleOperator.EQUALS,
+      value: 'Dallas',
+      weight: 0.7,
+      isMandatory: false,
+      failureMessage: 'Located in Dallas',
+    },
+  ],
+  requiredDocuments: [],
+  applicationUrl: 'https://stmonicachurch.org/',
+  helplinePhone: '214-358-1453',
+};
+
+// ============================================
+// EPISCOPAL CHURCHES
+// ============================================
+
+// St. Stephen's Episcopal Hurst - Interpreted Services
+export const ST_STEPHENS_HURST: BenefitProgram = {
+  id: 'st-stephens-hurst-2026',
+  name: 'St. Stephen\'s Episcopal - Interpreted Services',
+  shortName: 'St. Stephen\'s Hurst',
+  category: BenefitCategory.FAITH_BASED,
+  jurisdiction: 'county',
+  jurisdictionCode: 'Tarrant',
+  description: 'ASL interpreted services every Sunday at 10:00 AM',
+  estimatedMonthlyValue: 'varies',
+  processingTimeWeeks: 0,
+  rules: [
+    {
+      type: RuleType.DISABILITY_REQUIRED,
+      field: 'disability.hasDisability',
+      operator: RuleOperator.EQUALS,
+      value: true,
+      weight: 0.8,
+      isMandatory: false,
+      failureMessage: 'ASL interpretation available',
+    },
+    {
+      type: RuleType.GEOGRAPHY_MATCH,
+      field: 'geography.city',
+      operator: RuleOperator.INCLUDES,
+      value: ['Fort Worth', 'Other DFW'],
+      weight: 0.7,
+      isMandatory: false,
+      failureMessage: 'Located in Hurst (Mid-Cities)',
+    },
+  ],
+  requiredDocuments: [],
+  applicationUrl: 'https://ststephenshurst.org/',
+  helplinePhone: '817-282-3051',
+};
+
+// ============================================
+// LUTHERAN CHURCHES
+// ============================================
+
+// Redeemer Lutheran Dallas
+export const REDEEMER_LUTHERAN: BenefitProgram = {
+  id: 'redeemer-lutheran-2026',
+  name: 'Redeemer Lutheran Church - Disability Ministry',
+  shortName: 'Redeemer Lutheran',
+  category: BenefitCategory.FAITH_BASED,
+  jurisdiction: 'county',
+  jurisdictionCode: 'Dallas',
+  description: 'Inclusive worship and disability support services in Dallas',
+  estimatedMonthlyValue: 'varies',
+  processingTimeWeeks: 0,
+  rules: [
+    {
+      type: RuleType.DISABILITY_REQUIRED,
+      field: 'disability.hasDisability',
+      operator: RuleOperator.EQUALS,
+      value: true,
+      weight: 0.8,
+      isMandatory: false,
+      failureMessage: 'Disability-inclusive congregation',
+    },
+    {
+      type: RuleType.GEOGRAPHY_MATCH,
+      field: 'geography.city',
+      operator: RuleOperator.EQUALS,
+      value: 'Dallas',
+      weight: 0.7,
+      isMandatory: false,
+      failureMessage: 'Located in Dallas',
+    },
+  ],
+  requiredDocuments: [],
+  applicationUrl: 'https://redeemerdallas.org/',
+  helplinePhone: '214-368-0101',
+};
+
+// Stonebriar Community Church - GIFT Ministry
+export const STONEBRIAR_GIFT: BenefitProgram = {
+  id: 'stonebriar-gift-2026',
+  name: 'Stonebriar Community Church - GIFT Ministry',
+  shortName: 'Stonebriar GIFT',
+  category: BenefitCategory.FAITH_BASED,
+  jurisdiction: 'county',
+  jurisdictionCode: 'Dallas',
+  description: 'God Is Faithful Throughout - Bible teaching for students with special needs, respite nights',
+  estimatedMonthlyValue: 'varies',
+  processingTimeWeeks: 0,
+  rules: [
+    {
+      type: RuleType.DISABILITY_REQUIRED,
+      field: 'disability.hasDisability',
+      operator: RuleOperator.EQUALS,
+      value: true,
+      weight: 0.8,
+      isMandatory: false,
+      failureMessage: 'For students with special needs',
+    },
+    {
+      type: RuleType.GEOGRAPHY_MATCH,
+      field: 'geography.city',
+      operator: RuleOperator.INCLUDES,
+      value: ['Plano', 'Other DFW'],
+      weight: 0.7,
+      isMandatory: false,
+      failureMessage: 'Located in Frisco',
+    },
+  ],
+  requiredDocuments: [],
+  applicationUrl: 'https://www.stonebriar.org/',
+  helplinePhone: '469-252-5200',
+};
+
