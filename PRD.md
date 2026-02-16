@@ -35,3 +35,6 @@
 - Is there a plan for a backend/database, or does this stay fully client-side?
 
 *Last updated: 2026-02-15*
+
+
+#assessment #financial-inclusion #spec

@@ -34,3 +34,6 @@
 - Static export configured (`out/` directory exists)
 - Texas test data in HOW_TO_START.txt for demo flows
 - Multiple .md files with deployment/performance guides — check before duplicating docs
+
+
+#assessment #financial-inclusion

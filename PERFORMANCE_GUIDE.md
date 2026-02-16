@@ -249,3 +249,6 @@ Run `npm run check-perf` periodically to catch issues early.
 
 **Last Updated:** 2026-01-17
 **Related:** See refactoring plan in `/.claude/plans/bright-snuggling-wigderson.md`
+
+
+#assessment #financial-inclusion

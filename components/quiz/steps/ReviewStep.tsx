@@ -47,6 +47,7 @@ export function ReviewStep({ data, onValidate }: ReviewStepProps) {
         <div className="space-y-2 text-body text-neutral-700">
           <p><span className="font-medium">State:</span> {data.geography.state || 'Not specified'}</p>
           <p><span className="font-medium">County:</span> {data.geography.county || 'Not specified'}</p>
+          <p><span className="font-medium">City:</span> {data.geography.city || 'Not specified'}</p>
           <p><span className="font-medium">ZIP Code:</span> {data.geography.zipCode || 'Not specified'}</p>
           <p><span className="font-medium">Months of residency:</span> {data.geography.residencyMonths}</p>
         </div>

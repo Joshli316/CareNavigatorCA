@@ -5,8 +5,31 @@ import { QuizData } from '@/types/quiz';
 import { EligibilityResult } from '@/types/benefit';
 
 const MAX_TOOL_ROUNDS = 5;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 10;
+const ipRequests = new Map<string, { count: number; resetAt: number }>();
 
 export async function POST(request: Request) {
+  // Rate limiting — 10 requests/min per IP
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+  const now = Date.now();
+  const entry = ipRequests.get(ip);
+  if (entry && now < entry.resetAt) {
+    entry.count++;
+    if (entry.count > RATE_LIMIT_MAX) {
+      return Response.json({ error: 'Rate limit exceeded. Try again in a minute.' }, { status: 429 });
+    }
+  } else {
+    ipRequests.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+  }
+
+  // Origin check — block cross-origin abuse
+  const origin = request.headers.get('origin') || '';
+  const host = request.headers.get('host') || '';
+  if (origin && !origin.includes(host.split(':')[0])) {
+    return Response.json({ error: 'Forbidden' }, { status: 403 });
+  }
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return Response.json(

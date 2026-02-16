@@ -20,6 +20,7 @@ export function GeographyStep({ data, onChange, onValidate }: GeographyStepProps
     const isValid =
       formData.state !== '' &&
       formData.county.trim() !== '' &&
+      formData.city.trim() !== '' &&
       formData.zipCode.trim().length === 5 &&
       formData.residencyMonths > 0;
     onValidate(isValid);
@@ -55,6 +56,15 @@ export function GeographyStep({ data, onChange, onValidate }: GeographyStepProps
         onChange={(e) => handleChange('county', e.target.value)}
         placeholder="e.g., Harris County"
         helperText="Some local programs are county-specific"
+      />
+
+      <Input
+        label="City"
+        type="text"
+        value={formData.city}
+        onChange={(e) => handleChange('city', e.target.value)}
+        placeholder="e.g., Houston"
+        helperText="Helps match you with local organizations and services"
       />
 
       <Input

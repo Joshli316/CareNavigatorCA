@@ -24,3 +24,6 @@
 - Client-side only — no database, answers never leave the device
 
 *Last updated: 2026-02-15*
+
+
+#assessment #financial-inclusion #journal

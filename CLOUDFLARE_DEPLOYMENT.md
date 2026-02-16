@@ -215,3 +215,6 @@ npx wrangler pages deploy .next --project-name=care-navigator
 ```
 
 **Note:** Dashboard deployment is recommended for initial setup as it's more reliable and provides better visibility into the build process.
+
+
+#assessment #financial-inclusion

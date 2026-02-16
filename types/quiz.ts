@@ -17,6 +17,7 @@ export interface QuizData {
 export interface GeographyData {
   state: string;
   county: string;
+  city: string;
   zipCode: string;
   residencyMonths: number;
 }

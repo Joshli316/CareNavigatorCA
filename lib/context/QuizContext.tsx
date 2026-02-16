@@ -19,6 +19,7 @@ const initialQuizData: QuizData = {
   geography: {
     state: '',
     county: '',
+    city: '',
     zipCode: '',
     residencyMonths: 0,
   },

@@ -56,3 +56,6 @@ Screenshot it, record it, show it to investors.
 ---
 
 **Questions?** Open `HOW_TO_START.txt` for detailed help.
+
+
+#assessment #financial-inclusion
