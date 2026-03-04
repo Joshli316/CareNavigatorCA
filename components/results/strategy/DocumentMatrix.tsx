@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { DocumentOverlapEntry, RankedProgram } from '@/lib/utils/strategy';
-import { DocumentType } from '@/types/document';
 
 interface DocumentMatrixProps {
   documents: DocumentOverlapEntry[];
@@ -29,7 +28,7 @@ export function DocumentMatrix({ documents, programs }: DocumentMatrixProps) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
         </svg>
         <span className="font-semibold text-gray-900 text-sm flex-1">Document Overlap Matrix</span>
-        <span className="text-[10px] text-gray-400 uppercase tracking-wide mr-2">
+        <span className="text-xs text-gray-600 uppercase tracking-wide mr-2">
           {expanded ? 'Collapse' : 'Expand'}
         </span>
         <svg
@@ -56,7 +55,7 @@ export function DocumentMatrix({ documents, programs }: DocumentMatrixProps) {
                     <div className="truncate" title={p.result.program.name}>
                       {p.result.program.shortName || p.result.program.name.split(' ').slice(0, 2).join(' ')}
                     </div>
-                    <div className="text-[10px] text-gray-400 font-normal tabular-nums">
+                    <div className="text-xs text-gray-600 font-normal tabular-nums">
                       {p.result.probability}%
                     </div>
                   </th>
@@ -72,7 +71,7 @@ export function DocumentMatrix({ documents, programs }: DocumentMatrixProps) {
                       {doc.displayName}
                     </td>
                     {visiblePrograms.map(p => {
-                      const required = p.result.program.requiredDocuments.includes(docType as DocumentType);
+                      const required = p.result.program.requiredDocuments.includes(docType);
                       return (
                         <td key={p.result.programId} className="text-center px-1.5 py-2">
                           {required ? (
@@ -94,9 +93,9 @@ export function DocumentMatrix({ documents, programs }: DocumentMatrixProps) {
               })}
             </tbody>
           </table>
-          {!expanded && programs.length > 6 && (
-            <p className="text-[10px] text-gray-400 mt-2">
-              Showing 6 of {programs.length} programs. Expand to see all.
+          {programs.length > 6 && (
+            <p className="text-xs text-gray-500 mt-2">
+              Showing all {programs.length} programs.
             </p>
           )}
         </div>

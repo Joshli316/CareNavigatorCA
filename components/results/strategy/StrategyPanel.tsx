@@ -3,8 +3,7 @@
 import { useMemo } from 'react';
 import { EligibilityResult } from '@/types/benefit';
 import { computeStrategy } from '@/lib/utils/strategy';
-import { formatCurrency } from '@/lib/utils/format';
-import { formatEffortLevel } from '@/lib/utils/format';
+import { formatCurrency, formatEffortLevel } from '@/lib/utils/format';
 import { getEffortStyles } from '@/lib/utils/styles';
 import { TierGroup } from './TierGroup';
 import { DocumentChecklist } from './DocumentChecklist';
@@ -41,7 +40,7 @@ export function StrategyPanel({ results }: StrategyPanelProps) {
             Improve Your Eligibility
           </h2>
           <p className="text-sm text-gray-600 mb-4">
-            Based on your responses, no programs are a strong match yet. Here are ways to improve your odds:
+            No programs are a strong match yet — but there are ways to improve your chances:
           </p>
           <ul className="space-y-2">
             {tips.map((tip, i) => (
@@ -99,41 +98,46 @@ export function StrategyPanel({ results }: StrategyPanelProps) {
         </p>
       </div>
 
-      {/* Stats row */}
-      <div className="grid grid-cols-3 gap-3">
+      {/* Stats row — stacks on mobile */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         <div className="bg-white border border-gray-200 rounded-lg px-4 py-3 text-center">
           <p className="text-lg font-semibold text-gray-900 tabular-nums">
             {strategy.totalEligibleValue > 0 ? formatCurrency(strategy.totalEligibleValue) : 'Varies'}
           </p>
-          <p className="text-[10px] text-gray-500 uppercase tracking-wide">Est. Monthly Value</p>
+          <p className="text-xs text-gray-600 uppercase tracking-wide">Est. Monthly Value</p>
         </div>
         <div className="bg-white border border-gray-200 rounded-lg px-4 py-3 text-center">
           <p className="text-lg font-semibold text-gray-900 tabular-nums">
             {strategy.totalDocumentsNeeded}
           </p>
-          <p className="text-[10px] text-gray-500 uppercase tracking-wide">Documents Needed</p>
+          <p className="text-xs text-gray-600 uppercase tracking-wide">Documents Needed</p>
         </div>
-        <div className="bg-white border border-gray-200 rounded-lg px-4 py-3 text-center">
+        <div className="bg-white border border-gray-200 rounded-lg px-4 py-3 text-center col-span-2 sm:col-span-1">
           <p className="text-lg font-semibold text-gray-900 tabular-nums">
             {strategy.tiers.reduce((sum, t) => sum + t.programs.length, 0)}
           </p>
-          <p className="text-[10px] text-gray-500 uppercase tracking-wide">Programs Eligible</p>
+          <p className="text-xs text-gray-600 uppercase tracking-wide">Programs Eligible</p>
         </div>
       </div>
 
-      {/* Start Here */}
+      {/* Start Here — prominent, high visual weight */}
       {rec && !singleProgram && (
-        <div className="bg-accent-50 border border-accent-200 rounded-xl p-5">
-          <p className="text-[10px] text-accent-600 uppercase tracking-wide font-semibold mb-2">Start Here</p>
-          <div className="flex items-center gap-3">
+        <div className="bg-accent-50 border-2 border-accent-300 rounded-xl p-5">
+          <h3 className="text-sm font-semibold text-accent-700 mb-2 flex items-center gap-2">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
+            </svg>
+            Start Here
+          </h3>
+          <div className="flex items-center gap-3 flex-wrap">
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-gray-900">{rec.result.program.name}</p>
+              <p className="font-semibold text-gray-900 text-lg">{rec.result.program.name}</p>
               <div className="flex items-center gap-2 mt-1 flex-wrap">
-                <span className="text-xs text-accent-600 tabular-nums font-medium">{rec.result.probability}% match</span>
-                {typeof rec.result.estimatedMonthlyBenefit === 'number' && rec.result.estimatedMonthlyBenefit > 0 && (
-                  <span className="text-xs text-gray-500 tabular-nums">{formatCurrency(rec.result.estimatedMonthlyBenefit)}/mo</span>
+                <span className="text-sm text-accent-600 tabular-nums font-medium">{rec.result.probability}% match</span>
+                {rec.result.estimatedMonthlyBenefit > 0 && (
+                  <span className="text-sm text-gray-500 tabular-nums">{formatCurrency(rec.result.estimatedMonthlyBenefit)}/mo</span>
                 )}
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${recEffort!.bgColor} ${recEffort!.textColor}`}>
+                <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${recEffort!.bgColor} ${recEffort!.textColor}`}>
                   {formatEffortLevel(rec.effortLevel)}
                 </span>
               </div>
@@ -143,7 +147,7 @@ export function StrategyPanel({ results }: StrategyPanelProps) {
                 href={rec.result.program.applicationUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-shrink-0 px-4 py-2 bg-accent-600 text-white text-sm font-medium rounded-lg hover:bg-accent-700 transition-colors"
+                className="flex-shrink-0 px-5 py-2.5 bg-accent-600 text-white text-sm font-medium rounded-lg hover:bg-accent-700 transition-colors"
               >
                 Apply Now
               </a>
@@ -154,12 +158,13 @@ export function StrategyPanel({ results }: StrategyPanelProps) {
 
       {/* Single program simplified */}
       {singleProgram && rec && (
-        <div className="bg-accent-50 border border-accent-200 rounded-xl p-5">
-          <p className="font-semibold text-gray-900 mb-1">{rec.result.program.name}</p>
+        <div className="bg-accent-50 border-2 border-accent-300 rounded-xl p-5">
+          <h3 className="text-sm font-semibold text-accent-700 mb-2">Your Best Match</h3>
+          <p className="font-semibold text-gray-900 text-lg mb-1">{rec.result.program.name}</p>
           <p className="text-sm text-gray-600 mb-3">{rec.result.program.description}</p>
           <div className="flex items-center gap-3 flex-wrap">
             <span className="text-sm text-accent-600 font-medium">{rec.result.probability}% match</span>
-            {typeof rec.result.estimatedMonthlyBenefit === 'number' && rec.result.estimatedMonthlyBenefit > 0 && (
+            {rec.result.estimatedMonthlyBenefit > 0 && (
               <span className="text-sm text-gray-500">{formatCurrency(rec.result.estimatedMonthlyBenefit)}/mo</span>
             )}
             {rec.result.program.applicationUrl && (
@@ -167,7 +172,7 @@ export function StrategyPanel({ results }: StrategyPanelProps) {
                 href={rec.result.program.applicationUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 bg-accent-600 text-white text-sm font-medium rounded-lg hover:bg-accent-700 transition-colors"
+                className="px-5 py-2.5 bg-accent-600 text-white text-sm font-medium rounded-lg hover:bg-accent-700 transition-colors"
               >
                 Apply Now
               </a>
@@ -187,11 +192,11 @@ export function StrategyPanel({ results }: StrategyPanelProps) {
 
       {strategy.fullChecklist.length === 0 && (
         <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-subtle text-center">
-          <p className="text-sm text-gray-500">Most programs don&apos;t require documentation upfront.</p>
+          <p className="text-sm text-gray-600">Most programs don&apos;t require documentation upfront.</p>
         </div>
       )}
 
-      {/* Document Matrix (Advanced View — Section 9 Option 1) */}
+      {/* Document Matrix (Advanced View — collapsed by default) */}
       {strategy.fullChecklist.length > 0 && allPrograms.length > 1 && (
         <DocumentMatrix
           documents={strategy.fullChecklist}

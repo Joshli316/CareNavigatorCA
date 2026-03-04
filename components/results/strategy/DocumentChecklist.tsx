@@ -62,7 +62,7 @@ function DocRow({ doc, variant }: { doc: DocumentOverlapEntry; variant: 'core' |
         <span className="font-medium text-gray-800 text-sm flex-1">{doc.displayName}</span>
         <button
           onClick={() => setShowPrograms(!showPrograms)}
-          className="text-[10px] px-2 py-0.5 rounded-full bg-accent-50 text-accent-600 font-medium hover:bg-accent-100 transition-colors"
+          className="text-xs px-2.5 py-1 rounded-full bg-accent-50 text-accent-600 font-medium hover:bg-accent-100 transition-colors"
           aria-expanded={showPrograms}
           aria-label={`Show programs requiring ${doc.displayName}`}
         >
@@ -72,7 +72,7 @@ function DocRow({ doc, variant }: { doc: DocumentOverlapEntry; variant: 'core' |
       {showPrograms && (
         <div className="mt-2 ml-5 flex flex-wrap gap-1">
           {doc.programNames.map(name => (
-            <span key={name} className="text-[10px] px-2 py-0.5 rounded bg-white border border-gray-100 text-gray-500">
+            <span key={name} className="text-xs px-2 py-0.5 rounded bg-white border border-gray-200 text-gray-600">
               {name}
             </span>
           ))}

@@ -54,17 +54,17 @@ function getTierLevel(probability: number): TierLevel {
 
 function getTierLabel(level: TierLevel): string {
   if (level === 'high') return 'Recommended Core Applications';
-  if (level === 'medium') return 'If You Also Apply';
-  return 'Optional Applications';
+  if (level === 'medium') return 'Worth Exploring';
+  return 'Explore Further';
 }
 
 export function computeEffort(result: EligibilityResult): EffortLevel {
   const docs = result.program.requiredDocuments.length;
   const weeks = result.timelineWeeks;
   if (docs === 0 && weeks === 0) return 'none';
-  if (docs <= 2 && weeks < 8) return 'quick';
-  if (docs >= 3 || weeks >= 8) return 'involved';
-  return 'moderate';
+  if (docs <= 1 && weeks <= 4) return 'quick';
+  if (docs <= 3 && weeks <= 12) return 'moderate';
+  return 'involved';
 }
 
 // --- Document overlap ---
@@ -103,7 +103,7 @@ export function computeDocumentOverlap(
 function computeIncrementalDocs(
   tierResults: EligibilityResult[],
   coreDocs: Set<DocumentType>,
-  allResults: EligibilityResult[]
+  precomputedOverlap: DocumentOverlapEntry[]
 ): DocumentOverlapEntry[] {
   const needed = new Map<DocumentType, string[]>();
   for (const r of tierResults) {
@@ -114,9 +114,7 @@ function computeIncrementalDocs(
     }
   }
 
-  // Build tier breakdown from all results for context
-  const fullOverlap = computeDocumentOverlap(allResults);
-  const overlapMap = new Map(fullOverlap.map(e => [e.documentType, e.tierBreakdown]));
+  const overlapMap = new Map(precomputedOverlap.map(e => [e.documentType, e.tierBreakdown]));
 
   return Array.from(needed.entries())
     .map(([docType, programs]) => ({
@@ -232,23 +230,21 @@ export function computeStrategy(results: EligibilityResult[]): ApplicationStrate
       programs,
       totalMonthlyValue,
       variesCount,
-      incrementalDocuments: computeIncrementalDocs(sorted, coreDocSet, results),
+      incrementalDocuments: computeIncrementalDocs(sorted, coreDocSet, allDocs),
     });
   }
 
-  // Totals
+  // Totals — count all tiers to match "Programs Eligible" display
   const allDocsNeeded = new Set<DocumentType>();
   for (const r of results) {
-    if (r.probability < 40) continue;
     for (const d of r.program.requiredDocuments) allDocsNeeded.add(d);
   }
 
   let totalEligibleValue = 0;
   let variesCount = 0;
   for (const r of results) {
-    if (r.probability < 40) continue;
     const v = r.estimatedMonthlyBenefit;
-    if (typeof v === 'number' && v > 0) totalEligibleValue += v;
+    if (v > 0) totalEligibleValue += v;
     else variesCount++;
   }
 

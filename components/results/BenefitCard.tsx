@@ -6,7 +6,9 @@ import { QuizData } from '@/types/quiz';
 import { Card } from '@/components/shared/Card';
 import { Expandable } from '@/components/shared/Expandable';
 import { cn } from '@/lib/utils/cn';
-import { formatCurrency, formatTimeline } from '@/lib/utils/format';
+import { formatCurrency, formatTimeline, formatEffortLevel } from '@/lib/utils/format';
+import { computeEffort } from '@/lib/utils/strategy';
+import { getEffortStyles } from '@/lib/utils/styles';
 import {
   BenefitReasoning,
   BenefitFailedRules,
@@ -127,9 +129,11 @@ interface KeyInfoProps {
 function KeyInfo({ className }: KeyInfoProps) {
   const { result } = useBenefitCard();
   const { estimatedMonthlyBenefit, timelineWeeks } = result;
+  const effortLevel = computeEffort(result);
+  const effortStyle = getEffortStyles(effortLevel);
 
   return (
-    <div className={cn('px-5 py-4 border-t border-gray-100 grid grid-cols-2 gap-4 bg-gray-50/50', className)}>
+    <div className={cn('px-5 py-4 border-t border-gray-100 grid grid-cols-3 gap-4 bg-gray-50/50', className)}>
       <div>
         <p className="text-xs font-medium text-gray-500 mb-1">Est. Value</p>
         <p className="text-sm font-semibold text-gray-900 tabular-nums">
@@ -140,6 +144,12 @@ function KeyInfo({ className }: KeyInfoProps) {
       <div>
         <p className="text-xs font-medium text-gray-500 mb-1">Timeline</p>
         <p className="text-sm font-semibold text-gray-900">{formatTimeline(timelineWeeks)}</p>
+      </div>
+      <div>
+        <p className="text-xs font-medium text-gray-500 mb-1">Effort</p>
+        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${effortStyle.bgColor} ${effortStyle.textColor}`}>
+          {formatEffortLevel(effortLevel)}
+        </span>
       </div>
     </div>
   );

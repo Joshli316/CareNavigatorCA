@@ -56,10 +56,13 @@ h1, h2, h3, h4, h5, h6 {
     display: none !important;
   }
 
-  /* Hide filter bar and export buttons */
+  /* Hide filter bar, export buttons, and interactive-only controls */
   [class*="FilterBar"],
-  [class*="ExportResults"],
-  button {
+  [class*="ExportResults"] {
+    display: none !important;
+  }
+
+  .print\:hidden {
     display: none !important;
   }
 

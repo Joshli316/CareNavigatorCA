@@ -24,22 +24,6 @@ export function ResultsDashboard() {
     }
   }, [results.length]);
 
-  if (results.length === 0) {
-    return (
-      <div className="py-24 text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent-50 mb-6">
-          <svg className="w-8 h-8 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-          </svg>
-        </div>
-        <h2 className="text-2xl font-medium text-gray-900 mb-2">No results yet</h2>
-        <p className="text-gray-500 max-w-sm mx-auto">
-          Complete the assessment to discover programs you may qualify for.
-        </p>
-      </div>
-    );
-  }
-
   const categoryCounts = useMemo(() => {
     return results.reduce((counts, result) => {
       counts['all'] = (counts['all'] || 0) + 1;
@@ -67,6 +51,22 @@ export function ResultsDashboard() {
       .filter(r => r.isEligible && typeof r.estimatedMonthlyBenefit === 'number')
       .reduce((sum, r) => sum + r.estimatedMonthlyBenefit, 0);
   }, [results]);
+
+  if (results.length === 0) {
+    return (
+      <div className="py-24 text-center">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent-50 mb-6">
+          <svg className="w-8 h-8 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+        </div>
+        <h2 className="text-2xl font-medium text-gray-900 mb-2">No results yet</h2>
+        <p className="text-gray-500 max-w-sm mx-auto">
+          Complete the assessment to discover programs you may qualify for.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto">

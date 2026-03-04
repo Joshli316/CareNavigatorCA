@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { ProgramTier, RankedProgram, DocumentOverlapEntry } from '@/lib/utils/strategy';
-import { formatCurrency } from '@/lib/utils/format';
-import { formatEffortLevel } from '@/lib/utils/format';
+import { ProgramTier, RankedProgram } from '@/lib/utils/strategy';
+import { formatCurrency, formatEffortLevel } from '@/lib/utils/format';
 import { getTierStyles, getEffortStyles } from '@/lib/utils/styles';
 import { DocumentType } from '@/types/document';
 
@@ -29,16 +28,23 @@ export function TierGroup({ tier, coreDocuments }: TierGroupProps) {
       : 'These are your strongest matches based on eligibility.'
     : tier.level === 'medium'
       ? tier.incrementalDocuments.length > 0
-        ? `${tier.incrementalDocuments.length} additional document${tier.incrementalDocuments.length !== 1 ? 's' : ''} beyond your core packet.`
-        : 'No additional documents needed beyond your core packet.'
-      : 'Lower probability — worth exploring if you have time.';
+        ? `These have stricter requirements, but you may still qualify. ${tier.incrementalDocuments.length} additional document${tier.incrementalDocuments.length !== 1 ? 's' : ''} beyond your core packet.`
+        : 'These have stricter requirements, but no additional documents are needed beyond your core packet.'
+      : 'These have the most requirements, but could provide significant benefits.';
+
+  const handleToggle = () => setExpanded(!expanded);
+  const handleKbd = (e: React.KeyboardEvent) => {
+    if (e.code === 'Enter' || e.code === 'Space') { e.preventDefault(); handleToggle(); }
+  };
 
   return (
     <div className={`border border-gray-200 rounded-xl overflow-hidden ${styles.bgColor}`}>
-      {/* Header */}
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center gap-3 p-4 text-left hover:bg-gray-50/50 transition-colors"
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={handleToggle}
+        onKeyDown={handleKbd}
+        className="w-full flex items-center gap-3 p-4 text-left hover:bg-gray-50/50 transition-colors cursor-pointer"
         aria-expanded={expanded}
         aria-controls={`tier-${tier.level}`}
       >
@@ -46,11 +52,11 @@ export function TierGroup({ tier, coreDocuments }: TierGroupProps) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <h3 className="font-semibold text-gray-900 text-sm">{tier.label}</h3>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 font-medium">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 font-medium">
               {tier.programs.length} program{tier.programs.length !== 1 ? 's' : ''}
             </span>
           </div>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-xs text-gray-600 mt-0.5">
             {tier.totalMonthlyValue > 0 && (
               <span className="font-medium text-gray-700">{formatCurrency(tier.totalMonthlyValue)}/mo</span>
             )}
@@ -62,32 +68,34 @@ export function TierGroup({ tier, coreDocuments }: TierGroupProps) {
           </p>
         </div>
         <svg
-          className={`w-4 h-4 text-gray-400 transition-transform duration-200 flex-shrink-0 ${expanded ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 text-gray-400 transition-transform duration-200 flex-shrink-0 print:hidden ${expanded ? 'rotate-180' : ''}`}
           fill="none" viewBox="0 0 24 24" stroke="currentColor"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
-      </button>
+      </div>
 
-      {/* Body */}
-      {expanded && (
-        <div id={`tier-${tier.level}`} className="px-4 pb-4" role="region" aria-label={`${tier.label} programs`}>
-          <p className="text-xs text-gray-500 mb-3 pl-4">{tierMessage}</p>
-          <div className="space-y-2">
-            {displayPrograms.map(program => (
-              <ProgramRow key={program.result.programId} program={program} />
-            ))}
-          </div>
-          {hasMore && !showAll && (
-            <button
-              onClick={() => setShowAll(true)}
-              className="mt-3 text-xs text-accent-600 hover:text-accent-700 font-medium pl-4"
-            >
-              Show all {tier.programs.length} programs
-            </button>
-          )}
+      <div
+        id={`tier-${tier.level}`}
+        className={`px-4 pb-4 ${expanded ? '' : 'hidden print:block'}`}
+        role="region"
+        aria-label={`${tier.label} programs`}
+      >
+        <p className="text-xs text-gray-600 mb-3 pl-4">{tierMessage}</p>
+        <div className="space-y-2">
+          {displayPrograms.map(program => (
+            <ProgramRow program={program} />
+          ))}
         </div>
-      )}
+        {hasMore && !showAll && (
+          <button
+            onClick={(e) => { e.stopPropagation(); setShowAll(true); }}
+            className="mt-3 text-xs text-accent-600 hover:text-accent-700 font-medium pl-4 py-2 print:hidden"
+          >
+            Show all {tier.programs.length} programs
+          </button>
+        )}
+      </div>
     </div>
   );
 }
@@ -99,27 +107,28 @@ function ProgramRow({ program }: { program: RankedProgram }) {
 
   return (
     <div className="flex items-center gap-3 py-2.5 px-3 bg-white rounded-lg border border-gray-100">
-      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-gray-100 text-gray-500 text-[10px] font-semibold flex items-center justify-center">
+      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold flex items-center justify-center">
         {program.rank}
       </span>
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2">
-          <span className="font-medium text-gray-900 text-sm truncate">{r.program.name}</span>
-        </div>
-        <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-xs text-gray-500 tabular-nums">{r.probability}% match</span>
-          {typeof r.estimatedMonthlyBenefit === 'number' && r.estimatedMonthlyBenefit > 0 && (
-            <span className="text-xs text-gray-400 tabular-nums">{formatCurrency(r.estimatedMonthlyBenefit)}/mo</span>
+        <span className="font-medium text-gray-900 text-sm block">{r.program.name}</span>
+        <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+          <span className="text-xs text-gray-600 tabular-nums">{r.probability}% match</span>
+          {r.estimatedMonthlyBenefit > 0 && (
+            <span className="text-xs text-gray-500 tabular-nums">{formatCurrency(r.estimatedMonthlyBenefit)}/mo</span>
+          )}
+          {program.uniqueDocuments.length > 0 && (
+            <span className="text-xs text-gray-400">+{program.uniqueDocuments.length} extra doc{program.uniqueDocuments.length !== 1 ? 's' : ''}</span>
           )}
         </div>
       </div>
       <div className="flex items-center gap-2 flex-shrink-0">
         {hasNoDocs ? (
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-50 text-gray-400 font-medium">
+          <span className="text-xs px-2.5 py-1 rounded-full bg-gray-50 text-gray-500 font-medium">
             No docs needed
           </span>
         ) : (
-          <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${effort.bgColor} ${effort.textColor}`}>
+          <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${effort.bgColor} ${effort.textColor}`}>
             {formatEffortLevel(program.effortLevel)}
           </span>
         )}
@@ -128,7 +137,7 @@ function ProgramRow({ program }: { program: RankedProgram }) {
             href={r.program.applicationUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-accent-600 hover:text-accent-700 font-medium"
+            className="text-xs text-accent-600 hover:text-accent-700 font-medium px-2 py-1"
           >
             Apply
           </a>
