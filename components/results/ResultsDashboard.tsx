@@ -9,6 +9,7 @@ import { BenefitCard } from './BenefitCard';
 import { FilterBar } from './FilterBar';
 import { ExportResults } from './ExportResults';
 import { StrategyPanel } from './strategy/StrategyPanel';
+import { FollowUpTracker } from './FollowUpTracker';
 import { EligibilityFilter } from '@/lib/context/ResultsContext';
 import { formatCurrency } from '@/lib/utils/format';
 import { useTracker, STATUS_CONFIG } from '@/lib/context/TrackerContext';
@@ -153,6 +154,9 @@ export function ResultsDashboard() {
 
       {/* Application Strategy */}
       <StrategyPanel results={results} />
+
+      {/* Follow-Up Tracker */}
+      <FollowUpTracker results={results} />
 
       {/* Export */}
       <div className="mt-12 pt-8 border-t border-gray-200">

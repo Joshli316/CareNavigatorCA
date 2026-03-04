@@ -26,9 +26,9 @@ export default function Home() {
                 Start Free Assessment
               </Button>
             </Link>
-            <Link href="/grants">
+            <Link href="/life-events">
               <Button size="lg" variant="outline" className="px-8">
-                Upload Documents Instead
+                Quick Start (60 sec)
               </Button>
             </Link>
           </div>
@@ -107,52 +107,51 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Grant Navigator */}
+        {/* Tools */}
         <section className="mb-20">
-          <h2 className="text-center text-sm font-semibold text-accent-600 uppercase tracking-wide mb-3">New Feature</h2>
-          <p className="text-center text-2xl font-medium text-gray-900 mb-4">Upload documents, skip the quiz</p>
-          <p className="text-center text-gray-500 mb-8 max-w-2xl mx-auto">
-            Already have your documents? Our AI extracts your information automatically and matches you with grants and benefits in minutes.
-          </p>
+          <h2 className="text-center text-sm font-semibold text-accent-600 uppercase tracking-wide mb-3">More Ways to Help</h2>
+          <p className="text-center text-2xl font-medium text-gray-900 mb-12">Tools for every situation</p>
 
-          <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-subtle">
-            <div className="grid md:grid-cols-3 gap-6 text-center">
-              <div>
-                <div className="w-12 h-12 bg-accent-100 text-accent-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-1">Upload Documents</h3>
-                <p className="text-sm text-gray-500">ID, pay stubs, utility bills</p>
+          <div className="grid md:grid-cols-2 gap-5">
+            <Link href="/life-events" className="bg-white border border-gray-200 rounded-xl p-6 shadow-subtle hover:shadow-card hover:border-accent-300 transition-all group">
+              <div className="w-10 h-10 bg-accent-100 text-accent-600 rounded-lg flex items-center justify-center font-semibold mb-4">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
               </div>
-              <div>
-                <div className="w-12 h-12 bg-accent-100 text-accent-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-1">AI Extraction</h3>
-                <p className="text-sm text-gray-500">We read & organize your info</p>
+              <h3 className="font-semibold text-gray-900 mb-1">Quick Start</h3>
+              <p className="text-sm text-gray-500">Pick a life event, get matched in 60 seconds. No quiz needed.</p>
+            </Link>
+
+            <Link href="/vault" className="bg-white border border-gray-200 rounded-xl p-6 shadow-subtle hover:shadow-card hover:border-accent-300 transition-all group">
+              <div className="w-10 h-10 bg-accent-100 text-accent-600 rounded-lg flex items-center justify-center font-semibold mb-4">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                </svg>
               </div>
-              <div>
-                <div className="w-12 h-12 bg-accent-100 text-accent-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-1">Get Matched</h3>
-                <p className="text-sm text-gray-500">50+ programs analyzed</p>
+              <h3 className="font-semibold text-gray-900 mb-1">Document Vault</h3>
+              <p className="text-sm text-gray-500">Upload documents once, track which programs they unlock.</p>
+            </Link>
+
+            <Link href="/family" className="bg-white border border-gray-200 rounded-xl p-6 shadow-subtle hover:shadow-card hover:border-accent-300 transition-all group">
+              <div className="w-10 h-10 bg-accent-100 text-accent-600 rounded-lg flex items-center justify-center font-semibold mb-4">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
               </div>
-            </div>
-            <div className="text-center mt-8">
-              <Link href="/grants">
-                <Button>
-                  Try Grant Navigator
-                  <span className="ml-2">→</span>
-                </Button>
-              </Link>
-            </div>
+              <h3 className="font-semibold text-gray-900 mb-1">Family Strategy</h3>
+              <p className="text-sm text-gray-500">Optimize benefits across your whole household at once.</p>
+            </Link>
+
+            <Link href="/caseworker" className="bg-white border border-gray-200 rounded-xl p-6 shadow-subtle hover:shadow-card hover:border-accent-300 transition-all group">
+              <div className="w-10 h-10 bg-accent-100 text-accent-600 rounded-lg flex items-center justify-center font-semibold mb-4">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-1">Caseworker Mode</h3>
+              <p className="text-sm text-gray-500">Rapid intake for professionals. Screen clients in minutes.</p>
+            </Link>
           </div>
         </section>
 

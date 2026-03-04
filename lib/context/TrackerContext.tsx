@@ -16,6 +16,7 @@ interface TrackerContextValue {
   applications: Record<string, TrackedApplication>;
   getStatus: (programId: string) => ApplicationStatus;
   setStatus: (programId: string, status: ApplicationStatus) => void;
+  setNotes: (programId: string, notes: string) => void;
   counts: Record<ApplicationStatus, number>;
 }
 
@@ -49,12 +50,30 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
 
   const setStatus = useCallback((programId: string, status: ApplicationStatus) => {
     setApplications(prev => {
+      const existing = prev[programId];
       const next = {
         ...prev,
-        [programId]: { programId, status, updatedAt: Date.now() },
+        [programId]: { programId, status, updatedAt: Date.now(), notes: existing?.notes },
       };
       saveTracker(next);
       trackEvent('tracker_update', { programId, status });
+      return next;
+    });
+  }, []);
+
+  const setNotes = useCallback((programId: string, notes: string) => {
+    setApplications(prev => {
+      const existing = prev[programId];
+      const next = {
+        ...prev,
+        [programId]: {
+          programId,
+          status: existing?.status || 'not_started',
+          updatedAt: existing?.updatedAt || Date.now(),
+          notes,
+        },
+      };
+      saveTracker(next);
       return next;
     });
   }, []);
@@ -65,7 +84,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
   }, { not_started: 0, gathering_docs: 0, applied: 0, in_review: 0, approved: 0, denied: 0 } as Record<ApplicationStatus, number>);
 
   return (
-    <TrackerContext.Provider value={{ applications, getStatus, setStatus, counts }}>
+    <TrackerContext.Provider value={{ applications, getStatus, setStatus, setNotes, counts }}>
       {children}
     </TrackerContext.Provider>
   );

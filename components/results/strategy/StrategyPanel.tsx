@@ -5,15 +5,20 @@ import { EligibilityResult } from '@/types/benefit';
 import { computeStrategy } from '@/lib/utils/strategy';
 import { formatCurrency, formatEffortLevel } from '@/lib/utils/format';
 import { getEffortStyles } from '@/lib/utils/styles';
+import { useQuiz } from '@/lib/context/QuizContext';
 import { TierGroup } from './TierGroup';
 import { DocumentChecklist } from './DocumentChecklist';
 import { DocumentMatrix } from './DocumentMatrix';
+import { ApplicationTimeline } from './ApplicationTimeline';
+import { BenefitsCliff } from './BenefitsCliff';
 
 interface StrategyPanelProps {
   results: EligibilityResult[];
 }
 
 export function StrategyPanel({ results }: StrategyPanelProps) {
+  const { state: quizState } = useQuiz();
+  const monthlyIncome = quizState.data.financial.monthlyIncome || 0;
   const strategy = useMemo(() => computeStrategy(results), [results]);
 
   if (strategy.isEmpty) return null;
@@ -203,6 +208,14 @@ export function StrategyPanel({ results }: StrategyPanelProps) {
           programs={allPrograms}
         />
       )}
+
+      {/* Application Timeline */}
+      {!singleProgram && allPrograms.length > 1 && (
+        <ApplicationTimeline strategy={strategy} />
+      )}
+
+      {/* Benefits Cliff Visualizer */}
+      <BenefitsCliff income={monthlyIncome} results={results} />
 
       {/* Tier Groups */}
       {!singleProgram && (

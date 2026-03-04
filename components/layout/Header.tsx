@@ -9,15 +9,24 @@ export function Header() {
             CareNavigator
           </Link>
 
-          <nav aria-label="Main navigation" className="flex items-center gap-8">
+          <nav aria-label="Main navigation" className="flex items-center gap-4 md:gap-6">
             <Link href="/quiz" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
               Assessment
             </Link>
-            <Link href="/grants" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
-              Grants
+            <Link href="/life-events" className="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden sm:block">
+              Quick Start
             </Link>
             <Link href="/results" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
               Results
+            </Link>
+            <Link href="/vault" className="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden sm:block">
+              Vault
+            </Link>
+            <Link href="/family" className="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden md:block">
+              Family
+            </Link>
+            <Link href="/caseworker" className="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden md:block">
+              Caseworker
             </Link>
             <Link href="/demo" className="text-sm font-medium text-accent-600 hover:text-accent-700 transition-colors">
               Demo
