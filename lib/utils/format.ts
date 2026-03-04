@@ -75,6 +75,19 @@ export function formatPercentage(value: number): string {
 }
 
 /**
+ * Format effort level for display
+ */
+export function formatEffortLevel(level: string): string {
+  const map: Record<string, string> = {
+    none: 'No Application',
+    quick: 'Quick',
+    moderate: 'Moderate',
+    involved: 'Involved',
+  };
+  return map[level] || level;
+}
+
+/**
  * Parse a currency string (e.g. "$1,500") into a number
  */
 export function parseCurrency(value: string): number {
