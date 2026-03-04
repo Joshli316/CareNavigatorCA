@@ -39,6 +39,8 @@ export function TierGroup({ tier, coreDocuments }: TierGroupProps) {
       <button
         onClick={() => setExpanded(!expanded)}
         className="w-full flex items-center gap-3 p-4 text-left hover:bg-gray-50/50 transition-colors"
+        aria-expanded={expanded}
+        aria-controls={`tier-${tier.level}`}
       >
         <div className={`w-1 h-8 rounded-full ${styles.borderColor} flex-shrink-0`} />
         <div className="flex-1 min-w-0">
@@ -69,7 +71,7 @@ export function TierGroup({ tier, coreDocuments }: TierGroupProps) {
 
       {/* Body */}
       {expanded && (
-        <div className="px-4 pb-4">
+        <div id={`tier-${tier.level}`} className="px-4 pb-4" role="region" aria-label={`${tier.label} programs`}>
           <p className="text-xs text-gray-500 mb-3 pl-4">{tierMessage}</p>
           <div className="space-y-2">
             {displayPrograms.map(program => (

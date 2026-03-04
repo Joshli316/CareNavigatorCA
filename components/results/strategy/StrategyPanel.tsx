@@ -8,6 +8,7 @@ import { formatEffortLevel } from '@/lib/utils/format';
 import { getEffortStyles } from '@/lib/utils/styles';
 import { TierGroup } from './TierGroup';
 import { DocumentChecklist } from './DocumentChecklist';
+import { DocumentMatrix } from './DocumentMatrix';
 
 interface StrategyPanelProps {
   results: EligibilityResult[];
@@ -60,6 +61,9 @@ export function StrategyPanel({ results }: StrategyPanelProps) {
   // Single eligible program — simplified card
   const singleProgram = strategy.tiers.length === 1 && strategy.tiers[0].programs.length === 1;
 
+  // All programs across all tiers (for matrix)
+  const allPrograms = strategy.tiers.flatMap(t => t.programs);
+
   // Determine core label
   const coreLabel = strategy.coreDocuments.length > 0
     ? `These documents are shared across your top programs. Preparing them together may reduce your overall effort.`
@@ -81,7 +85,7 @@ export function StrategyPanel({ results }: StrategyPanelProps) {
   const recEffort = rec ? getEffortStyles(rec.effortLevel) : null;
 
   return (
-    <section className="mt-10 mb-10 space-y-6">
+    <section className="mt-10 mb-10 space-y-6" aria-label="Application Strategy Optimizer">
       {/* Header */}
       <div>
         <h2 className="text-xl font-semibold text-gray-900 tracking-tight flex items-center gap-2">
@@ -185,6 +189,14 @@ export function StrategyPanel({ results }: StrategyPanelProps) {
         <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-subtle text-center">
           <p className="text-sm text-gray-500">Most programs don&apos;t require documentation upfront.</p>
         </div>
+      )}
+
+      {/* Document Matrix (Advanced View — Section 9 Option 1) */}
+      {strategy.fullChecklist.length > 0 && allPrograms.length > 1 && (
+        <DocumentMatrix
+          documents={strategy.fullChecklist}
+          programs={allPrograms}
+        />
       )}
 
       {/* Tier Groups */}

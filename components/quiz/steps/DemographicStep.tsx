@@ -45,14 +45,21 @@ export function DemographicStep({ data, onChange, onValidate }: DemographicStepP
       <Input
         label="Your age"
         type="number"
-        value={formData.age || ''}
+        value={formData.age > 0 ? formData.age : ''}
         onChange={(e) => {
-          const val = parseInt(e.target.value, 10) || 0;
+          const raw = e.target.value;
+          if (raw === '') {
+            handleChange('age', 0);
+            return;
+          }
+          const val = parseInt(raw, 10);
+          if (isNaN(val)) return;
           handleChange('age', Math.min(Math.max(val, 0), 120));
         }}
-        min={0}
+        min={1}
         max={120}
-        placeholder="0"
+        placeholder="Enter your age"
+        error={formData.age === 0 ? undefined : formData.age > 120 ? 'Please enter a valid age' : undefined}
       />
 
       <Input

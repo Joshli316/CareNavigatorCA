@@ -13,7 +13,7 @@ export function DocumentChecklist({ coreDocuments, additionalDocuments, coreLabe
   if (coreDocuments.length === 0 && additionalDocuments.length === 0) return null;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-subtle">
+    <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-subtle" role="region" aria-label="Document checklist">
       <h3 className="font-semibold text-gray-900 text-sm mb-1 flex items-center gap-2">
         <svg className="w-4 h-4 text-accent-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -63,6 +63,8 @@ function DocRow({ doc, variant }: { doc: DocumentOverlapEntry; variant: 'core' |
         <button
           onClick={() => setShowPrograms(!showPrograms)}
           className="text-[10px] px-2 py-0.5 rounded-full bg-accent-50 text-accent-600 font-medium hover:bg-accent-100 transition-colors"
+          aria-expanded={showPrograms}
+          aria-label={`Show programs requiring ${doc.displayName}`}
         >
           {doc.programCount} program{doc.programCount !== 1 ? 's' : ''}
         </button>
