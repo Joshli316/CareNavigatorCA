@@ -7,6 +7,10 @@ import { useQuiz } from '@/lib/context/QuizContext';
 import { buildSuggestedQuestions } from '@/lib/ai/system-prompt';
 import { trackEvent } from '@/lib/utils/analytics';
 
+function escapeHtml(s: string): string {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -198,7 +202,7 @@ export function AdvisorPanel() {
                   {msg.role === 'assistant' ? (
                     <div className="whitespace-pre-wrap [&_strong]:font-semibold"
                       dangerouslySetInnerHTML={{
-                        __html: msg.content
+                        __html: escapeHtml(msg.content)
                           .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                           .replace(/\n/g, '<br/>')
                       }}
